@@ -3,6 +3,7 @@ package com.gameweb.utils;
 /**
  * Created by Kamil on 2017-11-29.
  */
+
 public class Queries
 {
 

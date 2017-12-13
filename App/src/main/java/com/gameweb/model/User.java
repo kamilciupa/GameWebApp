@@ -1,12 +1,21 @@
 package com.gameweb.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import java.util.Arrays;
+
 /**
  * Created by Kamil on 2017-11-29.
  */
 
+@Entity
 public class User {
 
+    @Id
+    @GeneratedValue
     private Integer id;
+
     private String username;
     private String email;
     private String password;
@@ -69,5 +78,17 @@ public class User {
 
     public void setAbout(String about) {
         this.about = about;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", avatar=" + Arrays.toString(avatar) +
+                ", about='" + about + '\'' +
+                '}';
     }
 }

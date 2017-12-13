@@ -5,10 +5,7 @@ import com.gameweb.service.UserService;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -26,23 +23,27 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registrationGet(){
+        modelAndView.addObject("user", new User());
         modelAndView.addObject("p", "Rejestracja");
-        modelAndView.setViewName("/test");
+        modelAndView.setViewName("/registrationTest");
         return modelAndView;
     }
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-   // public ModelAndView registration(@Valid User user, BindingResult bindingResult){
-    public ModelAndView registration(@RequestBody User user, BindingResult bindingResult){
+    public ModelAndView registration(@Valid User user, BindingResult bindingResult){
+   // public ModelAndView registration(@RequestBody User user, BindingResult bindingResult){
+//    public ModelAndView registration(@ModelAttribute User user, BindingResult bindingResult){
 
+        modelAndView.addObject("user", new User());
         if(bindingResult.hasErrors()){
+
             modelAndView.addObject("p", "Rejestracja zakończona z błedem");
         } else {
             userService.registration(user);
             String tet = user.toString();
             modelAndView.addObject("p", tet);
         }
-        modelAndView.setViewName("/test");
+        modelAndView.setViewName("/registrationTest");
         return  modelAndView;
     }
 

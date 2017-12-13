@@ -22,7 +22,7 @@ public class User {
     private byte[] avatar; // niewymagany
     private String about; // niewymagany
 
-    private User(){
+    public User(){
 
     }
 

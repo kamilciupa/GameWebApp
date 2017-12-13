@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
+
 /**
  * Created by Kamil on 2017-12-13.
  **/
@@ -23,9 +25,26 @@ public class UserService {
         User user = userInput;
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         userDAO.addUserToDB(user);
+        System.out.println(Base64.getEncoder().encode(user.getAvatar()));
+
+      //  user.setAvatar(user.getFile().getBytes());
+
+
+
+
         return new ResponseEntity(HttpStatus.OK);
     }
 
     /*----- Registration methods -----*/
+
+    /*----- Get picture -----*/
+    public byte[] getPicture(){
+        byte[] s = userDAO.getAvatar();
+
+        return s;
+    }
+
+    /*----- Get picture -----*/
+
 
 }

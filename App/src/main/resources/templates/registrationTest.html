@@ -12,7 +12,12 @@
 
 <body>
 
-<p th:text="${p}">Rejestracja!</p>
+<p th:text="${img}">Rejestracja!</p>
+
+
+<!--<img th:src="@{img}" />-->
+<!--<img th:src="${'data:image/png;base64,'+img}"  />-->
+<img  th:src="@{'data:image/png;base64,'+${img}}" />
 
 <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
     <div class="containter">
@@ -24,6 +29,15 @@
         <input type="password"  name="password" th:field="*{password}" required="true"/>
         <label> Powtórz hasło </label>
         <input type="password"  name="re-password" required="true"/>
+
+        <!-- upload picture -->
+        <form method="POST" th:action="@{/registration}" enctype="multipart/form-data" action="/">
+            <table>
+                <tr><td>File to upload:</td><td><input type="file" name="file" th:field="*{avatar}" /></td></tr>
+                <tr><td></td><td><input type="submit" value="Upload" /></td></tr>
+            </table>
+        </form>
+
 
         <!-- guzik -->
         <div class="clearfix">

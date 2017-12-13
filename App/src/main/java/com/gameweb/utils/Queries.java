@@ -12,7 +12,10 @@ public class Queries
     static public final String S_REVIEWS = "SELECT * FROM reviews";
     static public final String S_CATEGORIES = "SELECT * FROM categories";
 
+    static public final String S_AVATAR = "SELECT avatar FROM users where id = (SELECT MAX(ID) FROM USERS)";
+
     static public final String I_USER = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
+    static public final String I_USER_W_AVATAR = "INSERT INTO users (username, email, password,avatar) VALUES (?,?,?,?)";
     static public final String I_GAME = "INSERT INTO games (title, masterid) VALUES (?,?)";
     static public final String I_REVIEW = "INSERT INTO reviews (parentid, content, rating) VALUES (?,?,?)";
 

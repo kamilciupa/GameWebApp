@@ -1,9 +1,13 @@
 package com.gameweb.model;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+
 import java.util.Arrays;
+import java.util.Base64;
 
 /**
  * Created by Kamil on 2017-11-29.
@@ -21,6 +25,8 @@ public class User {
     private String password;
     private byte[] avatar; // niewymagany
     private String about; // niewymagany
+
+    //private CommonsMultipartFile file;
 
     public User(){
 
@@ -79,6 +85,14 @@ public class User {
     public void setAbout(String about) {
         this.about = about;
     }
+
+//    public CommonsMultipartFile getFile() {
+//        return file;
+//    }
+//
+//    public void setFile(CommonsMultipartFile file) {
+//        this.file = file;
+//    }
 
     @Override
     public String toString() {

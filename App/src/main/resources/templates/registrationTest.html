@@ -12,7 +12,7 @@
 
 <body>
 
-<p th:text="${img}">Rejestracja!</p>
+<p th:text="${p}">Rejestracja!</p>
 
 
 <!--<img th:src="@{img}" />-->
@@ -26,13 +26,32 @@
         <label> Email </label>
         <input type="email" placeholder="halinka@kiepska.com" name="email" th:field="*{email}" required="true"/>
         <label> Hasło </label>
-        <input type="password"  name="password" th:field="*{password}" required="true"/>
+        <!--<input type="password"  name="password" th:field="*{password}" required="true"/>-->
+        <input type="password"  name="password" id="password" th:field="*{password}"  onkeyup='check();' required="true"/>
         <label> Powtórz hasło </label>
-        <input type="password"  name="re-password" required="true"/>
+        <input type="password"  name="re-password"  id="repasswor"  onkeyup='check();' required="true"/>
+        <span id='message'></span>
+
+
         <!-- guzik -->
         <div class="clearfix">
-            <button type="submit" class="signupbtn"> Zarejestruj </button>
+            <button type="submit" id="butt" class="signupbtn"> Zarejestruj </button>
         </div>
+
+        <script>
+            var check = function() {
+                if (document.getElementById('password').value ==
+                    document.getElementById('repasswor').value) {
+                    document.getElementById('message').style.color = 'green';
+                    document.getElementById('message').innerHTML = 'matching';
+                    document.getElementById('butt').removeAttribute('disabled');
+                } else {
+                    document.getElementById('message').style.color = 'red';
+                    document.getElementById('message').innerHTML = 'not matching';
+                    document.getElementById('butt').setAttribute('disabled', 'disabled');
+                }
+            }
+        </script>
 
     </div>
 </form>

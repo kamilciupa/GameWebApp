@@ -10,12 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Base64;
+
 
 /**
  * Created by Kamil on 2017-12-13.
@@ -28,8 +23,10 @@ public class UserController {
 
     ModelAndView modelAndView = new ModelAndView();
 
+
+
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public ModelAndView registrationGet(){
+    public ModelAndView registrationGet() {
         modelAndView.addObject("user", new User());
         modelAndView.addObject("p", "Rejestracja");
         modelAndView.setViewName("/registrationTest");
@@ -38,19 +35,22 @@ public class UserController {
 
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public ModelAndView registration(@Valid User user, BindingResult bindingResult){
+    public ModelAndView registration(@Valid User user,BindingResult bindingResult) {
 
         modelAndView.addObject("user", new User());
-        if(bindingResult.hasErrors()){
+        System.out.println(user.getPassword());
 
-            modelAndView.addObject("p", "Rejestracja zakończona z błedem");
+        if(
+                bindingResult.hasErrors()
+                || (!userService.isUsernameFree(user.getUsername()))
+                || (!userService.isEmailFree(user.getEmail()))
+            ) {
+            modelAndView.addObject("p", "B L A D ");
         } else {
+            modelAndView.addObject("p", "Sukces");
             userService.registration(user);
-            String tet = user.toString();
-            modelAndView.addObject("p", tet);
         }
         modelAndView.setViewName("/registrationTest");
         return  modelAndView;
     }
-
 }

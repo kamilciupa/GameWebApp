@@ -25,26 +25,11 @@ public class UserService {
         User user = userInput;
         user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         userDAO.addUserToDB(user);
-        System.out.println(Base64.getEncoder().encode(user.getAvatar()));
-
-      //  user.setAvatar(user.getFile().getBytes());
-
-
-
-
         return new ResponseEntity(HttpStatus.OK);
     }
 
     /*----- Registration methods -----*/
 
-    /*----- Get picture -----*/
-    public byte[] getPicture(){
-        byte[] s = userDAO.getAvatar();
-
-        return s;
-    }
-
-    /*----- Get picture -----*/
 
 
 }

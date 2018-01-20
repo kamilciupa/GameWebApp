@@ -51,7 +51,7 @@ public class UserController {
     public ModelAndView registration(@Valid User user,BindingResult bindingResult) {
 
         modelAndView.addObject("user", new User());
-        System.out.println(user.getPassword());
+
 
         if(
                 bindingResult.hasErrors()
@@ -65,6 +65,12 @@ public class UserController {
         }
         modelAndView.setViewName("/registrationTest");
         return  modelAndView;
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public ModelAndView getLoginPage(){
+        modelAndView.setViewName("/loginTestJsp");
+        return modelAndView;
     }
 
 
@@ -83,7 +89,6 @@ public class UserController {
             byte[] bytes = uploadfile.getBytes();
             org.apache.commons.codec.binary.Base64 encoder = new org.apache.commons.codec.binary.Base64();
             s = encoder.encodeToString(bytes);
-            //s = new sun.misc.BASE64Encoder().encode(bytes);
             System.out.println(s);
 
         } catch (IOException e) {

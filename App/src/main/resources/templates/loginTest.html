@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Logowanko test proszę państwa!</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+</head>
+
+<body>
+
+<p th:text="${p}">Zaloguj się</p>
+
+<form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+    <div class="containter">
+        <label> Email </label>
+        <input type="email" placeholder="halinka@kiepska.com" name="email" th:field="*{email}" required="true"/>
+        <label> Hasło </label>
+        <input type="password"  name="password" id="password" th:field="*{password}"  onkeyup='check();' required="true"/>
+
+
+        <!-- guzik -->
+        <div class="clearfix">
+            <button type="submit" id="butt" class="signupbtn"> Zaloguj </button>
+        </div>
+
+
+
+    </div>
+</form>
+</body>
+
+</html>

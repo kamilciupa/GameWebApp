@@ -21,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
 
+
 /**
  * Created by Kamil on 2017-12-13.
  */
@@ -71,7 +72,9 @@ public class UserController {
         String s = "";
         try {
             byte[] bytes = uploadfile.getBytes();
-            s = new sun.misc.BASE64Encoder().encode(bytes);
+            org.apache.commons.codec.binary.Base64 encoder = new org.apache.commons.codec.binary.Base64();
+            s = encoder.encodeToString(bytes);
+            //s = new sun.misc.BASE64Encoder().encode(bytes);
             System.out.println(s);
 
         } catch (IOException e) {

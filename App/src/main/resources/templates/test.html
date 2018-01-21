@@ -13,7 +13,11 @@
 <body>
 
 <p th:text="${p}">Welcome to our grocery store!</p>
-<span sec:authentication="name">Bob</span>
+<span sec:authentication="username"></span>
+
+
+<a href="#" th:href="@{/logout}">Log Out</a>
+
 </body>
 
 </html>

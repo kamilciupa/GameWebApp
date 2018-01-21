@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Base64;
@@ -21,7 +22,7 @@ public class UserService {
     @Autowired
     UserDAO userDAO;
     @Autowired
-    BCryptPasswordEncoder bCryptPasswordEncoder;
+    PasswordEncoder passwordEncoder;
     /*----- Registration methods -----*/
 
     public ResponseEntity registration(User userInput){
@@ -30,7 +31,7 @@ public class UserService {
        // user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
         // druga wersja
         System.out.println(user.getPassword());
-        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         System.out.println(user.getPassword());
 
         userDAO.addUserToDB(user);

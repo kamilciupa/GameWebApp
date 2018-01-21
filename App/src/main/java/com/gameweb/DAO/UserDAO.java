@@ -26,6 +26,7 @@ public class UserDAO {
     public void addUserToDB(User user){
         try {
             jdbcTemplate.update(queries.I_USER, user.getUsername(), user.getEmail(), user.getPassword());
+            jdbcTemplate.update(queries.I_USER_ROLE, user.getUsername(), "ROLE_ADMIN");
         } catch (Exception e){
             e.printStackTrace();
             System.out.println("Błąd w DAO");

@@ -12,4 +12,10 @@ public class MyBeans  {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
+
+//    @Bean
+//    public String getAuthenticatedUser(){
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        return  authentication.getName();
+//    }
 }

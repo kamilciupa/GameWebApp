@@ -18,15 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Base64;
+
 
 
 
@@ -41,7 +34,9 @@ public class UserController {
 
     ModelAndView modelAndView = new ModelAndView();
 
-
+/*
+ * Rejestracja
+ */
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public ModelAndView registrationGet() {
@@ -54,23 +49,24 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView registration(@Valid User user,BindingResult bindingResult) {
-
         modelAndView.addObject("user", new User());
-
-
-        if(
-                bindingResult.hasErrors()
+        if(     bindingResult.hasErrors()
                 || (!userService.isUsernameFree(user.getUsername()))
                 || (!userService.isEmailFree(user.getEmail()))
-            ) {
+                ) {
             modelAndView.addObject("p", "B L A D ");
         } else {
             modelAndView.addObject("p", "Sukces");
             userService.registration(user);
         }
+
         modelAndView.setViewName("/registrationTest");
         return  modelAndView;
     }
+
+    /*
+     * Logowanie
+     */
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(){
@@ -79,18 +75,23 @@ public class UserController {
     }
 
 
-    @RequestMapping(value="/logout", method = RequestMethod.GET)
-    public ModelAndView logoutPage (HttpServletRequest request, HttpServletResponse response) {
-        System.out.println("Debug logout");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            new SecurityContextLogoutHandler().logout(request, response, auth);
-        }
-        System.out.println("Debug logout2 ");
-        modelAndView.setViewName("/loginTestJsp");
-        return modelAndView;
-    }
+    /*
+     * Wylogowanie
+     */
 
+//    @RequestMapping(value="/logout", method = RequestMethod.GET)
+//    public ModelAndView logoutPage (HttpServletRequest request, HttpServletResponse response) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (auth != null){
+//            new SecurityContextLogoutHandler().logout(request, response, auth);
+//        }
+//        modelAndView.setViewName("/loginTestJsp");
+//        return modelAndView;
+//    }
+
+    /*
+     * Dodawanie zdjęcia
+     */
     @RequestMapping(value = "/uploadFile", method = RequestMethod.GET)
     public ModelAndView uploadGet(){
         modelAndView.setViewName("/uploadPictureTest");
@@ -111,12 +112,8 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         modelAndView.addObject("img", "data:image/png;base64,"+ s);
         modelAndView.setViewName("/uploadPictureTest");
         return  modelAndView;
     }
-
-
-
 }

@@ -21,6 +21,7 @@ public class UserDAO {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    // Make Bean and autowire that
     Queries queries = new Queries();
 
     public void addUserToDB(User user){

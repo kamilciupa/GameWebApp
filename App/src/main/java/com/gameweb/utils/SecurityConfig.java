@@ -37,12 +37,11 @@ DataSource dataSource;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()    .dataSource(dataSource). passwordEncoder(passwordEncoder)
-        .usersByUsernameQuery(usersQuery)
-                .authoritiesByUsernameQuery(rolesQuery)
-
-
-                ;
+        auth.jdbcAuthentication()
+                .dataSource(dataSource)
+                .passwordEncoder(passwordEncoder)
+                .usersByUsernameQuery(usersQuery)
+                .authoritiesByUsernameQuery(rolesQuery);
     }
 
     @Override
@@ -55,7 +54,7 @@ DataSource dataSource;
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
 //                .antMatchers("/registration").hasAuthority("ROLE_ADMIN").anyRequest()
-             .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
+                .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
                 .defaultSuccessUrl("/test")

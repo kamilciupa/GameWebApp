@@ -27,13 +27,7 @@ public class UserService {
 
     public ResponseEntity registration(User userInput){
         User user = userInput;
-        // pierwsza wersja
-       // user.setPassword(BCrypt.hashpw(user.getPassword(), BCrypt.gensalt()));
-        // druga wersja
-        System.out.println(user.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        System.out.println(user.getPassword());
-
         userDAO.addUserToDB(user);
         return new ResponseEntity(HttpStatus.OK);
     }

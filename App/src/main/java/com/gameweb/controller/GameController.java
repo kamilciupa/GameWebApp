@@ -20,11 +20,6 @@ public class GameController {
         public ModelAndView test(ModelAndView modelAndView){
         modelAndView.addObject("p", "TEST");
         modelAndView.setViewName("/test");
-
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
-        System.out.println("Jestem aktywnym userem: " + currentPrincipalName);
-
         return  modelAndView;
     }
 

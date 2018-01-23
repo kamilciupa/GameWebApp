@@ -50,12 +50,22 @@ public class UserController {
     @RequestMapping(value = "/registration", method = RequestMethod.POST)
     public ModelAndView registration(@Valid User user,BindingResult bindingResult) {
         modelAndView.addObject("user", new User());
-        if(     bindingResult.hasErrors()
-                || (!userService.isUsernameFree(user.getUsername()))
-                || (!userService.isEmailFree(user.getEmail()))
-                ) {
+        boolean hasErrors = false;
+        if(bindingResult.hasErrors()) {
             modelAndView.addObject("p", "B L A D ");
-        } else {
+            hasErrors = true;
+        }
+        if(!userService.isUsernameFree(user.getUsername())) {
+            modelAndView.addObject("p", "Nazwa użytkownika jest zajęta");
+            hasErrors = true;
+        }
+        if(!userService.isEmailFree(user.getEmail())){
+            modelAndView.addObject("p", "Email jest zajęty");
+            hasErrors = true;
+        }
+
+
+       if(!hasErrors){
             modelAndView.addObject("p", "Sukces");
             userService.registration(user);
         }

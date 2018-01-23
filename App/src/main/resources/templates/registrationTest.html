@@ -1,16 +1,16 @@
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Good Thymes Virtual Grocery</title>
+    <title>GameWeb</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" media="all"
-          href="../../css/gtvg.css" th:href="@{/css/gtvg.css}" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/mystyle.css" th:href="@{/css/mystyle.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
-
-<body>
+<body class="bg">
 
 <p th:text="${p}">Rejestracja!</p>
 
@@ -19,42 +19,37 @@
 <!--<img th:src="${'data:image/png;base64,'+img}"  />-->
 <img  th:src="@{'data:image/png;base64,'+${img}}" />
 
-<form action="#" th:action="@{/registration}" th:object="${user}" method="post">
-    <div class="containter">
-        <label> Nazwa użytkownika </label>
-        <input type="text" placeholder="Halinka" name="username" th:field="*{username}" required="true"/>
-        <label> Email </label>
-        <input type="email" placeholder="halinka@kiepska.com" name="email" th:field="*{email}" required="true"/>
-        <label> Hasło </label>
-        <!--<input type="password"  name="password" th:field="*{password}" required="true"/>-->
-        <input type="password"  name="password" id="password" th:field="*{password}"  onkeyup='check();' required="true"/>
-        <label> Powtórz hasło </label>
-        <input type="password"  name="re-password"  id="repasswor"  onkeyup='check();' required="true"/>
-        <span id='message'></span>
+<div class="container">
+    <div class="wrapper">
+        <form class="form-signin" action="#" th:action="@{/registration}" th:object="${user}" method="post">
+            <div class="containter">
+                <h2 class="form-signin-heading"><span class="glyphicon glyphicon-lock"></span> Zarejestruj się</h2>
+                <input type="text" placeholder="Nazwa użytkownika" name="username" th:field="*{username}" required="true" class="form-control"/>
+                <input type="email" placeholder="Email" name="email" th:field="*{email}" required="true" class="form-control"/>
+                <input type="password" placeholder="Hasło" name="password"  class="form-control" id="password" th:field="*{password}"  onkeyup='check();' required="true"/>
+                <input type="password" placeholder="Powtórz hasło" name="re-password" class="form-control" id="repasswor"  onkeyup='check();' required="true"/>
+                <span id='message'></span>
+                <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Zarejestruj </button>
+                <script>
+                    var check = function() {
+                        if (document.getElementById('password').value ==
+                            document.getElementById('repasswor').value) {
+                            document.getElementById('message').style.color = 'green';
+                            document.getElementById('message').innerHTML = 'matching';
+                            document.getElementById('butt').removeAttribute('disabled');
+                        } else {
+                            document.getElementById('message').style.color = 'red';
+                            document.getElementById('message').innerHTML = 'not matching';
+                            document.getElementById('butt').setAttribute('disabled', 'disabled');
+                        }
+                    }
+                </script>
+            </div>
 
 
-        <!-- guzik -->
-        <div class="clearfix">
-            <button type="submit" id="butt" class="signupbtn"> Zarejestruj </button>
-        </div>
-
-        <script>
-            var check = function() {
-                if (document.getElementById('password').value ==
-                    document.getElementById('repasswor').value) {
-                    document.getElementById('message').style.color = 'green';
-                    document.getElementById('message').innerHTML = 'matching';
-                    document.getElementById('butt').removeAttribute('disabled');
-                } else {
-                    document.getElementById('message').style.color = 'red';
-                    document.getElementById('message').innerHTML = 'not matching';
-                    document.getElementById('butt').setAttribute('disabled', 'disabled');
-                }
-            }
-        </script>
-
-    </div>
 </form>
+</div>
+</div>
 </body>
 
 </html>

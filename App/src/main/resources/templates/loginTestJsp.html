@@ -1,36 +1,32 @@
 <!DOCTYPE html>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <title>Spring Security Tutorial</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"/>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"/>
-</head>
-
-<body>
-<form th:action="@{/registration}" method="get">
-    <button class="btn btn-md btn-warning btn-block" type="Submit">Go To Registration Page</button>
-</form>
-
-<div class="container">
-    <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
-    <form th:action="@{/login}" method="POST" class="form-signin">
-        <h3 class="form-signin-heading" th:text="Welcome"></h3>
-        <br/>
-
-        <input type="text" id="username" name="username"  th:placeholder="username"
-               class="form-control" /> <br/>
-        <input type="password"  th:placeholder="Password"
-               id="password" name="password" class="form-control" /> <br />
-
-        <div align="center" th:if="${param.error}">
-            <p style="font-size: 20; color: #FF1C19;">Email or Password invalid, please verify</p>
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>GameWeb</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="../static/css/mystyle.css" th:href="@{/css/mystyle.css}"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body class="bg">
+        <div class="container">
+            <!--Form-->
+            <div class="wrapper">
+                <form class="form-signin" action="#" th:action="@{/login}"  method="post">
+                    <h2 class="form-signin-heading"><span class="glyphicon glyphicon-lock"></span>Zaloguj się </h2>
+                    <p class="form-signin-desc"> Skorzystaj z pełnych możliwości naszej strony </p>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nazwa użytkownika" name="username" th:placeholder="username" required="true"/>
+                        <input type="password" class="form-control" placeholder="Hasło"  name="password" id="password"  th:placeholder="Password"  onkeyup='check();' required="true"/>
+                        <button type="submit" class="btn btn-lg btn-danger btn-block" id="butt" > Zaloguj </button>
+                        <div  class="alert alert-danger" align="center" th:if="${param.error}">
+                            <p style="font-size: 20; color: #FF1C19;"><span class="glyphicon glyphicon-remove"></span> Nieprawidłowa nazwa użytkownika lub hasło!</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" name="Submit" value="Login" type="Submit" th:text="Login"></button>
-    </form>
-</div>
-</body>
+    </body>
 </html>

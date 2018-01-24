@@ -59,5 +59,29 @@ public class UserDAO {
         return null;
     }
 
+    public User getUserByName(String username) {
+        try{
+           User users =
+            jdbcTemplate.queryForObject(queries.S_USER_BY_NAME, new RowMapper<User>() {
+                @Override
+                public User mapRow(ResultSet resultSet, int i) throws SQLException {
+                    User user = new User();
+                    user.setId(resultSet.getInt(1));
+                    user.setUsername(resultSet.getString(2));
+                    user.setEmail(resultSet.getString(3));
+                    user.setPassword(resultSet.getString(4));
+                    user.setAbout(resultSet.getString(6));
+                    user.setAvatar(resultSet.getBytes(5));
+                    return user;
+                }
+            }, username);   return users; } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Nie można pobrać użytkowników ");
+        }
+         return new User();
+    }
 
+    public void updateAbout(User user) {
+        jdbcTemplate.update(queries.U_USER_ABOUT, user.getAbout(), user.getUsername());
+    }
 }

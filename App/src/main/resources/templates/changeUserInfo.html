@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>GameWeb</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/css/mystyle.css" th:href="@{/css/mystyle.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+<!--<p th:text="${p}">Welcome to our grocery store!</p>-->
+<span sec:authentication="username"></span>
+<div class="col-sm-2 col-md-2">
+    <img  th:src="${img}"
+          alt="sosss"
+          class="img-rounded img-responsive" />
+</div>
+<div class="col-sm-4 col-md-4">
+
+        <p th:text="${username}" >Bruce Wayne</p>
+
+    <form class="form-signin" th:action="@{/settings}" th:object="${ab}" method="post">
+    <input type="text" th:value="${about}" th:field="*{ab}" name="text"  required="true" class="form-control"/>
+        <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Zaktualizuj </button>
+    </form>
+
+
+    <form method="POST" enctype="multipart/form-data" action="/uploadFile">
+        <table>
+            <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+            <tr><td></td><td><input type="submit"  value="Upload" /></td></tr>
+        </table>
+    </form>
+
+</div>
+<a href="#" th:href="@{/logout}">Log Out</a>
+
+</body>
+
+</html>

@@ -54,6 +54,12 @@ public class UserService {
 
     /*----- Registration methods -----*/
 
+    public User getUserByName(String username){
+        User user = userDAO.getUserByName(username);
+        return user;
+    }
 
-
+    public void updateAbout(User user) {
+        userDAO.updateAbout(user);
+    }
 }

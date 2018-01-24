@@ -6,6 +6,7 @@ import com.gameweb.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.SpringSecurityCoreVersion;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.BindingResult;
@@ -19,8 +20,7 @@ import javax.validation.Valid;
 
 
 import java.io.IOException;
-
-
+import java.security.Principal;
 
 
 /**
@@ -129,4 +129,61 @@ public class UserController {
         modelAndView.setViewName("/uploadPictureTest");
         return  modelAndView;
     }
+
+    /*
+     * Profil użytkownika
+     */
+    @RequestMapping(value = "/profile/{username}", method = RequestMethod.GET)
+    public ModelAndView getProfile(@PathVariable("username") String username){
+        User user = userService.getUserByName(username);
+
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("email", user.getEmail());
+        modelAndView.addObject("about", user.getAbout());
+        modelAndView.setViewName("/profile");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/settings", method = RequestMethod.GET)
+    public ModelAndView getSettings( HttpServletRequest request){
+
+            Principal principal = request.getUserPrincipal();
+
+        User user = userService.getUserByName( principal.getName());
+
+
+        String s = "";
+        try {
+            byte[] bytes = user.getAvatar();
+            org.apache.commons.codec.binary.Base64 encoder = new org.apache.commons.codec.binary.Base64();
+            s = encoder.encodeToString(bytes);
+            System.out.println(s);
+        } catch (Exception e){
+
+        }
+
+        modelAndView.addObject("img", "data:image/png;base64,"+ s);
+        modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("about", user.getAbout());
+        modelAndView.setViewName("/changeUserInfo");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/settings", method = RequestMethod.POST)
+    public ModelAndView postSettings(@Valid User user,  HttpServletRequest request, BindingResult bindingResult){
+
+      //  Principal principal = request.getUserPrincipal();
+      //   user = userService.getUserByName(principal.getName());
+        String s = new String();
+        modelAndView.addObject("ab", s);
+
+        if(!bindingResult.hasErrors()) {
+            userService.updateAbout(user);
+        }
+
+
+        modelAndView.setViewName("/changeUserInfo");
+        return modelAndView;
+    }
+
 }

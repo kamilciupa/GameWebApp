@@ -68,9 +68,12 @@ public class UserController {
        if(!hasErrors){
             modelAndView.addObject("p", "Sukces");
             userService.registration(user);
-        }
+           modelAndView.setViewName("/loginTestJsp");
+        } else {
+           modelAndView.setViewName("/registrationTest");
+       }
 
-        modelAndView.setViewName("/registrationTest");
+
         return  modelAndView;
     }
 

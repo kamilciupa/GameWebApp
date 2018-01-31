@@ -25,13 +25,13 @@
 
         <p th:text="${username}" >Bruce Wayne</p>
 
-    <form class="form-signin" th:action="@{/settings}" th:object="${ab}" method="post">
-    <input type="text" th:value="${about}" th:field="*{ab}" name="text"  required="true" class="form-control"/>
+    <form class="form-signin" th:action="@{/settings}" th:object="${user}" method="post">
+    <input type="text" name="about" th:value="${about}" th:field="*{about}"   class="form-control"/>
         <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Zaktualizuj </button>
     </form>
 
 
-    <form method="POST" enctype="multipart/form-data" action="/uploadFile">
+    <form th:action="@{/uploadAvatar}" method="POST" enctype="multipart/form-data" action="/uploadFile">
         <table>
             <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
             <tr><td></td><td><input type="submit"  value="Upload" /></td></tr>

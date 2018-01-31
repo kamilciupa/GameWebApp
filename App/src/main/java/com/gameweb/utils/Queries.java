@@ -24,7 +24,7 @@ public class Queries
 
 
     static public final String U_USER_ABOUT = "UPDATE users set about = ? where username = ?";
-    static public final String U_USER_AVATAR = "UPDATE users set avatar = ? where id = ?";
+    static public final String U_USER_AVATAR = "UPDATE users set avatar = ? where username = ?";
 
     static public final String U_GAME_ABOUT = "UPDATE games set about = ? where id = ?";
     static public final String U_GAME_COVER = "UPDATE games set cover = ? where id = ?";

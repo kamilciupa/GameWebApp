@@ -84,4 +84,8 @@ public class UserDAO {
     public void updateAbout(User user) {
         jdbcTemplate.update(queries.U_USER_ABOUT, user.getAbout(), user.getUsername());
     }
+
+    public void updateAvatar(User user){
+        jdbcTemplate.update(queries.U_USER_AVATAR, user.getAvatar(), user.getUsername());
+    }
 }

@@ -17,8 +17,9 @@
 <!--<p th:text="${p}">Welcome to our grocery store!</p>-->
 <span sec:authentication="username"></span>
 <div class="col-sm-2 col-md-2">
-    <img src="https://thumb9.shutterstock.com/display_pic_with_logo/3891164/619490732/stock-vector-unknown-user-icon-in-trendy-flat-style-isolated-on-transparent-background-user-silhouette-symbol-619490732.jpg"
-         alt="" class="img-rounded img-responsive" />
+    <img th:src="${img}" alt="" class="img-rounded img-responsive" />
+            <!--src="https://thumb9.shutterstock.com/display_pic_with_logo/3891164/619490732/stock-vector-unknown-user-icon-in-trendy-flat-style-isolated-on-transparent-background-user-silhouette-symbol-619490732.jpg"-->
+
 </div>
 <div class="col-sm-4 col-md-4">
     <blockquote>

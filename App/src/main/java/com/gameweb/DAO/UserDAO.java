@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -87,5 +88,16 @@ public class UserDAO {
 
     public void updateAvatar(User user){
         jdbcTemplate.update(queries.U_USER_AVATAR, user.getAvatar(), user.getUsername());
+    }
+
+    public byte[] getDefaultAvatar() {
+        return
+                jdbcTemplate.queryForObject(queries.S_GET_DEF_AVATAR, new RowMapper<byte[]>() {
+                            @Override
+                            public byte[] mapRow(ResultSet resultSet, int i) throws SQLException {
+                                return resultSet.getBytes(1);
+                            }
+                        }
+                );
     }
 }

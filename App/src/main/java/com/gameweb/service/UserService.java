@@ -67,4 +67,8 @@ public class UserService {
         userDAO.updateAvatar(user);
     }
 
+    public byte[] getDefaultAvatar(){
+        return userDAO.getDefaultAvatar();
+    }
+
 }

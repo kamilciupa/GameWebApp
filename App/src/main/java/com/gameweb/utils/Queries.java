@@ -13,6 +13,9 @@ public class Queries
     static public final String S_REVIEWS = "SELECT * FROM reviews";
     static public final String S_CATEGORIES = "SELECT * FROM categories";
 
+
+    static public final String S_GET_DEF_AVATAR = "SELECT photo FROM photo_def WHERE id = 1";
+
     static public final String S_AVATAR = "SELECT avatar FROM users where id = (SELECT MAX(ID) FROM USERS)";
 
     static public final String I_USER = "INSERT INTO users (username, email, password) VALUES (?,?,?)";

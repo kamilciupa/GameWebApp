@@ -13,7 +13,7 @@ public class Game {
     private Double avgRating;
     private Integer masterId;
 
-    private Game(){
+    public Game(){
 
     }
 

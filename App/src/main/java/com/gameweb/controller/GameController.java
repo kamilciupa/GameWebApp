@@ -10,13 +10,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.security.Principal;
 
 /**
@@ -46,10 +46,11 @@ public class GameController {
     }
 
     @RequestMapping(value = "/games/addGame", method = RequestMethod.POST)
-    public ModelAndView registration(@Valid Game game, BindingResult bindingResult, HttpServletRequest request) {
+    public ModelAndView registration(@Valid Game game, @RequestPart(value = "file", required = false) MultipartFile file, BindingResult bindingResult, HttpServletRequest request) throws IOException {
         Principal principal = request.getUserPrincipal();
         User user = userService.getUserByName( principal.getName());
         modelAndView.addObject("game", new Game());
+
         boolean hasErrors = false;
         if(bindingResult.hasErrors()) {
             modelAndView.addObject("p", "B L A D ");
@@ -68,6 +69,8 @@ public class GameController {
 
 
         if(!hasErrors){
+            game.setCover(file.getBytes());
+            System.out.println(file.getName());
             modelAndView.addObject("p", "Sukces");
             gameService.addGame(game, user.getId());
             modelAndView.setViewName("/profile");
@@ -79,6 +82,33 @@ public class GameController {
         return  modelAndView;
     }
 
+    @RequestMapping(value = "games/profile/{gameTitle}", method = RequestMethod.GET)
+    public ModelAndView getProfileGame(@PathVariable("gameTitle") String gameTitle){
+        Game game = gameService.getGameByTitle(gameTitle);
+
+
+        String s = "";
+        byte[] bytes;
+        try {
+            if(game.getCover() == null){
+                bytes = userService.getDefaultAvatar();
+            } else {
+                bytes = game.getCover();
+            }
+            org.apache.commons.codec.binary.Base64 encoder = new org.apache.commons.codec.binary.Base64();
+            s = encoder.encodeToString(bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        modelAndView.addObject("img", "data:image/png;base64,"+ s);
+        modelAndView.addObject("title", game.getTitle());
+        modelAndView.addObject("about", game.getAbout());
+        modelAndView.addObject("developer", game.getDeveloper());
+        modelAndView.addObject("releaseDate",game.getReleaseDate());
+        modelAndView.setViewName("/gameProfile");
+        return modelAndView;
+    }
 
 
 }

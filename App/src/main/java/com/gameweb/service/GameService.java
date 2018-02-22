@@ -31,6 +31,8 @@ public class GameService {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-
+    public Game getGameByTitle(String title){
+        return gameDAO.getUserByTitle(title);
+    }
 
 }

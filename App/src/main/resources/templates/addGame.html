@@ -18,7 +18,7 @@
 
 <div class="container">
     <div class="wrapper">
-        <form class="form-signin" action="#" th:action="@{/games/addGame}" th:object="${game}" method="post">
+        <form class="form-signin" action="#" enctype="multipart/form-data" th:action="@{/games/addGame}" th:object="${game}" method="post">
             <div class="containter">
                 <h2 class="form-signin-heading"><span class="glyphicon glyphicon-lock"></span> Dodaj grę</h2>
                 <input type="text" placeholder="Tytuł Gry" name="username" th:field="*{title}" required="true" class="form-control"/>
@@ -26,6 +26,11 @@
                 <input type="text" placeholder="Twórca/Studio" name="developer" th:field="*{developer}" class="form-control"/>
                 <input type="date"  name="releaseDate" th:field="*{releaseDate}" class="form-control"/>
                 <textarea name="about" placeholder="Opis gry" th:field="*{about}" cols="40" rows="5"></textarea>
+
+
+                <input type="file" name="file" id="file"  required="required"/>
+                <input id="submit" type="submit"/>
+
                 <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Dodaj </button>
             </div>
         </form>

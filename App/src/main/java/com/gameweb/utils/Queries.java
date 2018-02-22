@@ -10,6 +10,7 @@ public class Queries
     static public final String S_USERS = "SELECT * FROM users";
     static public final String S_USER_BY_NAME = "SELECT * FROM users WHERE username = ?";
     static public final String S_GAMES = "SELECT * FROM games";
+    static public final String S_GAME_BY_TITLE = "SELECT * FROM games WHERE title = ?";
     static public final String S_REVIEWS = "SELECT * FROM reviews";
     static public final String S_CATEGORIES = "SELECT * FROM categories";
 
@@ -20,7 +21,7 @@ public class Queries
 
     static public final String I_USER = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
     static public final String I_USER_W_AVATAR = "INSERT INTO users (username, email, password,avatar) VALUES (?,?,?,?)";
-    static public final String I_GAME = "INSERT INTO games (title,about, developer, release_date,  masterid) VALUES (?,?,?,?,?)";
+    static public final String I_GAME = "INSERT INTO games (title,about, developer, release_date,cover,  masterid) VALUES (?,?,?,?,?,?)";
     static public final String I_REVIEW = "INSERT INTO reviews (parentid, content, rating) VALUES (?,?,?)";
     static public final String I_USER_ROLE = "INSERT INTO user_roles (username, role) VALUES (?,?)";
     static public final String I_CATEGORY_GAME = "INSERT INTO categories_games (cat_id, game_id) values (?,?)";

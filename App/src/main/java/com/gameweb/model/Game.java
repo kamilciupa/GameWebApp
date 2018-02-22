@@ -1,5 +1,9 @@
 package com.gameweb.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.util.Date;
+
 /**
  * Created by Kamil on 2017-11-29.
  */
@@ -10,6 +14,9 @@ public class Game {
     private String title;
     private String about;
     private byte[] cover;
+    private String developer;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date releaseDate;
     private Double avgRating;
     private Integer masterId;
 
@@ -69,5 +76,21 @@ public class Game {
 
     public void setMasterId(Integer masterId) {
         this.masterId = masterId;
+    }
+
+    public String getDeveloper() {
+        return developer;
+    }
+
+    public void setDeveloper(String developer) {
+        this.developer = developer;
+    }
+
+    public Date getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(Date releaseDate) {
+        this.releaseDate = releaseDate;
     }
 }

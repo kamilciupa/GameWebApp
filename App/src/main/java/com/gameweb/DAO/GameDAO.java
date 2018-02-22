@@ -23,7 +23,7 @@ public class GameDAO {
 
         public void addGameToDB(Game game, Integer userID){
             try{
-                jdbcTemplate.update(queries.I_GAME, game.getTitle(), game.getAbout(),userID);
+                jdbcTemplate.update(queries.I_GAME, game.getTitle(), game.getAbout(),game.getDeveloper(),game.getReleaseDate(),userID);
             } catch (Exception e){
                 e.printStackTrace();
                 System.out.println("Błąd w DAO");

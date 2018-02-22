@@ -18,6 +18,8 @@ id BIGSERIAL PRIMARY KEY,
 title varchar(255) unique,
 about varchar(1000000),
 cover bytea,
+release_date date,
+developer varchar(255),
 masterId BIGSERIAL references users(id)
 );
 
@@ -37,3 +39,6 @@ create table categories_games (
 cat_id BIGSERIAL references categories(id),
 game_id BIGSERIAL references games(id)
 );
+
+
+

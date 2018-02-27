@@ -41,4 +41,25 @@ game_id BIGSERIAL references games(id)
 );
 
 
+create table commments 
+(
+id bigserial primary key,
+content varchar(1000000),
+parent bigserial,
+type varchar(1) check (type in ('R','G')),
+key_value bigserial,
+author bigserial references users(id)
+);
+
+drop table reviews;
+create table reviews 
+(
+id bigserial primary key,
+content varchar(1000000),
+key_value bigserial references games(id),
+author bigserial references users(id)
+);
+
+
+
 

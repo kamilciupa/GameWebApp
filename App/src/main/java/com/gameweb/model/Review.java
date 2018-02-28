@@ -9,11 +9,15 @@ package com.gameweb.model;
 public class Review {
 
     private Integer id;
-    private Integer parentId;
+    private Integer parentId; // ID Usera
     private String content;
+    private String reviewTitle;
+    private Integer key_value; // Id Gry
     private Double rating;
+    private String gameName;
+    private String authorName;
 
-    private Review(){
+    public Review(){
 
     }
 
@@ -53,5 +57,37 @@ public class Review {
 
     public void setRating(Double rating) {
         this.rating = rating;
+    }
+
+    public Integer getKey_value() {
+        return key_value;
+    }
+
+    public void setKey_value(Integer key_value) {
+        this.key_value = key_value;
+    }
+
+    public String getReviewTitle() {
+        return reviewTitle;
+    }
+
+    public void setReviewTitle(String reviewTitle) {
+        this.reviewTitle = reviewTitle;
+    }
+
+    public String getGameName() {
+        return gameName;
+    }
+
+    public void setGameName(String gameName) {
+        this.gameName = gameName;
+    }
+
+    public String getAuthorName() {
+        return authorName;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
     }
 }

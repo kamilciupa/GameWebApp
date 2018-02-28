@@ -39,6 +39,7 @@ public class GameDAO {
                 @Override
                 public Game mapRow(ResultSet resultSet, int i) throws SQLException {
                     Game game = new Game();
+                    game.setId(resultSet.getInt("id"));
                     game.setTitle(resultSet.getString("title"));
                     game.setAbout(resultSet.getString("about"));
                     game.setDeveloper(resultSet.getString("developer"));

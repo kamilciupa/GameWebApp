@@ -1,8 +1,10 @@
 package com.gameweb.controller;
 
 import com.gameweb.model.Game;
+import com.gameweb.model.Review;
 import com.gameweb.model.User;
 import com.gameweb.service.GameService;
+import com.gameweb.service.ReviewService;
 import com.gameweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -30,6 +32,8 @@ public class GameController {
     GameService gameService;
     @Autowired
     UserService userService;
+    @Autowired
+    ReviewService reviewService;
 
     ModelAndView modelAndView = new ModelAndView();
 
@@ -109,6 +113,57 @@ public class GameController {
         modelAndView.setViewName("/gameProfile");
         return modelAndView;
     }
+
+    @RequestMapping(value = "games/profile/{gameTitle}/addReview", method = RequestMethod.GET)
+    public ModelAndView getAddReview(@PathVariable("gameTitle") String gameTitle){
+        Game game = gameService.getGameByTitle(gameTitle);
+        modelAndView.addObject("review", new Review());
+        modelAndView.addObject("title", game.getTitle());
+        modelAndView.setViewName("/addReview");
+        return modelAndView;
+    }
+
+
+    @RequestMapping(value = "/games/profile/{gameTitle}/addReview", method = RequestMethod.POST)
+    public ModelAndView addReviewPost(@Valid Review review,@PathVariable("gameTitle") String gameTitle, BindingResult bindingResult, HttpServletRequest request) throws IOException {
+
+        Principal principal = request.getUserPrincipal();
+        User user = userService.getUserByName( principal.getName());
+        Game game =  gameService.getGameByTitle(gameTitle);
+        modelAndView.addObject("review", new Review());
+
+        boolean hasErrors = false;
+        if(bindingResult.hasErrors()) {
+            modelAndView.addObject("p", "B L A D ");
+            hasErrors = true;
+        }
+        System.out.println(review.getReviewTitle());System.out.println(review.getReviewTitle());System.out.println(review.getReviewTitle());
+        if(!hasErrors){
+            review.setParentId(user.getId());
+            review.setKey_value(game.getId());
+            reviewService.addReview(review);
+            modelAndView.setViewName("/addReview");
+        } else {
+            modelAndView.setViewName("/registrationTest");
+        }
+
+        return  modelAndView;
+    }
+
+    //TODO Przenieść to do kontrolera od recenzji -> Stworzyć kontroler od recenzji
+
+    @RequestMapping(value = "/reviews/{id}", method = RequestMethod.GET)
+    public ModelAndView getWholeReview(@PathVariable("id") Integer reviewId){
+        Review review = reviewService.getReviewById(reviewId);
+        modelAndView.addObject("content", review.getContent());
+        modelAndView.addObject("title" , review.getReviewTitle());
+        modelAndView.addObject("author", review.getAuthorName());
+        modelAndView.addObject("gameTitle", review.getGameName());
+
+        modelAndView.setViewName("/wholeReview");
+        return  modelAndView;
+    }
+
 
 
 }

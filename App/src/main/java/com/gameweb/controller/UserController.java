@@ -34,6 +34,14 @@ public class UserController {
 
     ModelAndView modelAndView = new ModelAndView();
 
+//    Główna strona
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView getMainUnlogged() {
+        modelAndView.setViewName("/mainUnlogged");
+        return modelAndView;
+    }
+
 /*
  * Rejestracja
  */

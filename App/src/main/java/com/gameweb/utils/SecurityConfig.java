@@ -57,7 +57,7 @@ DataSource dataSource;
                 .antMatchers("/admin/**").hasAuthority("ADMIN").anyRequest()
                 .authenticated().and().csrf().disable().formLogin()
                 .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/test")
+                .defaultSuccessUrl("/index")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()

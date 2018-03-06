@@ -42,6 +42,14 @@ public class UserController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    public ModelAndView getMainLogged(HttpServletRequest request){
+        Principal principal = request.getUserPrincipal();
+        User user = userService.getUserByName( principal.getName());
+        modelAndView.addObject("username",user.getUsername());
+        modelAndView.setViewName("/mainLogged");
+        return modelAndView;
+    }
 /*
  * Rejestracja
  */

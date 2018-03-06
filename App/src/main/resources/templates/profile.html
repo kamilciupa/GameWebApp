@@ -3,17 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 
-<head>
-    <title>GameWeb</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="../static/css/mystyle.css" th:href="@{/css/mystyle.css}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<head th:replace="layout :: site-head" />
 
-<body>
-
+<body class="bg">
+<header th:replace="layoutLogged :: site-header" />
 <!--<p th:text="${p}">Welcome to our grocery store!</p>-->
 <span sec:authentication="username"></span>
 <div class="col-sm-2 col-md-2">
@@ -23,13 +16,13 @@
 </div>
 <div class="col-sm-4 col-md-4">
     <blockquote>
-        <p th:text="${username}" >Bruce Wayne</p>
-        <small><cite title="Source Title" th:text="${about}">Gotham, United Kingdom  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
+       <font color="white"><p  th:text="${username}" >Bruce Wayne</p></font>
+        <small><font color="white"><cite title="Source Title" th:text="${about}">Gotham, United Kingdom  <i class="glyphicon glyphicon-map-marker"></i></cite></font> </small>
     </blockquote>
-    <p th:text="${email}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
+    <font color="white"><p th:text="${email}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p></font>
 </div>
-<a href="#" th:href="@{/logout}">Log Out</a>
 
+<header th:replace="layout :: footer" />
 </body>
 
 </html>

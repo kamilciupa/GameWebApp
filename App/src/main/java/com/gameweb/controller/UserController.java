@@ -5,17 +5,14 @@ import com.gameweb.service.UserService;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.SpringSecurityCoreVersion;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 
@@ -96,10 +93,24 @@ public class UserController {
     /*
      * Logowanie
      */
-
+//   @PreAuthorize("isAuthenticated()")
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(){
-        modelAndView.setViewName("/loginTestJsp");
+        return checkAuthAndRedirect("index","loginTestJsp");
+    }
+
+    private ModelAndView checkAuthAndRedirect(String ok, String wrong) {
+        if(SecurityContextHolder.getContext().getAuthentication() != null
+                &&
+                SecurityContextHolder.getContext().getAuthentication().isAuthenticated()
+                &&
+                !(SecurityContextHolder.getContext().getAuthentication()instanceof AnonymousAuthenticationToken)
+                ) {
+            modelAndView.clear();
+            modelAndView.setViewName("redirect:/" + ok);
+        }
+        else
+            modelAndView.setViewName("/"+wrong);
         return modelAndView;
     }
 

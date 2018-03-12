@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
+import java.util.List;
 
 /**
  * Created by Kamil on 2017-11-29.
@@ -34,5 +35,7 @@ public class GameService {
     public Game getGameByTitle(String title){
         return gameDAO.getUserByTitle(title);
     }
+
+    public List<Game> getGamesTitles(){ return  gameDAO.getGamesTitles();}
 
 }

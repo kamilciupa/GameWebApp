@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Kamil on 2017-11-29.
@@ -84,6 +86,17 @@ public class GameController {
 
 
         return  modelAndView;
+    }
+
+    @RequestMapping(value = "games/all", method = RequestMethod.GET)
+    public ModelAndView getAllGames(){
+        List<Game> games = new ArrayList<Game>();
+        games = gameService.getGamesTitles();
+        System.out.println(games.size());
+        System.out.println(games.get(1));
+        modelAndView.addObject("games", games);
+        modelAndView.setViewName("/listGame");
+        return modelAndView;
     }
 
     @RequestMapping(value = "games/profile/{gameTitle}", method = RequestMethod.GET)

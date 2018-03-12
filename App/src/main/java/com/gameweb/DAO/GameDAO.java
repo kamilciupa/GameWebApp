@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.security.Principal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 
 @Repository
@@ -33,6 +34,18 @@ public class GameDAO {
             }
         }
 
+
+        public List<Game> getGamesTitles(){
+            List<Game> a = jdbcTemplate.query(queries.S_GET_GAMES_TITLES, new RowMapper<Game>() {
+                @Override
+                public Game mapRow(ResultSet rs, int rownumber) throws SQLException {
+                    Game e = new Game();
+                    e.setTitle(rs.getString("title"));
+                    return e;
+                }
+            });
+            return a;
+        }
 
     public Game getUserByTitle(String title) {
             return  jdbcTemplate.queryForObject(queries.S_GAME_BY_TITLE, new RowMapper<Game>() {

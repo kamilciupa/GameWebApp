@@ -36,4 +36,5 @@ public class Queries
     static public final String U_GAME_COVER = "UPDATE games set cover = ? where id = ?";
 
     public static final String S_REVIEW_BY_ID = "SELECT * FROM reviews WHERE id = ?";
+    public static final String S_GET_GAMES_TITLES = "SELECT title FROM games";
 }

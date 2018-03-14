@@ -13,15 +13,32 @@ avatar bytea,
 about varchar(1000000)
 );
 
-create table games (
-id BIGSERIAL PRIMARY KEY,
-title varchar(255) unique,
-about varchar(1000000),
-cover bytea,
-release_date date,
-developer varchar(255),
-masterId BIGSERIAL references users(id)
+
+DROP TABLE public.games;
+
+CREATE TABLE public.games
+(
+  id bigint NOT NULL DEFAULT nextval('games_id_seq'::regclass),
+  title character varying(255),
+  about character varying(1000000),
+  cover bytea,
+  release_date date,
+  developer character varying(255),
+  masterid bigint NOT NULL DEFAULT nextval('games_masterid_seq'::regclass),
+  rating real,
+  votes_amount integer,
+  CONSTRAINT games_pkey PRIMARY KEY (id),
+  CONSTRAINT games_masterid_fkey FOREIGN KEY (masterid)
+      REFERENCES public.users (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION,
+  CONSTRAINT games_title_key UNIQUE (title)
+)
+WITH (
+  OIDS=FALSE
 );
+ALTER TABLE public.games
+  OWNER TO postgres;
+
 
 create table reviews (
 id BIGSERIAL PRIMARY KEY,
@@ -55,6 +72,7 @@ drop table reviews;
 create table reviews 
 (
 id bigserial primary key,
+title varchar(500),
 content varchar(1000000),
 key_value bigserial references games(id),
 author bigserial references users(id)

@@ -37,4 +37,5 @@ public class Queries
 
     public static final String S_REVIEW_BY_ID = "SELECT * FROM reviews WHERE id = ?";
     public static final String S_GET_GAMES_TITLES = "SELECT title FROM games";
+    public static final String U_GAME_RATING = "UPDATE games SET votes_amount = ? , votes_sum = ?, rating = ? where title = ?";
 }

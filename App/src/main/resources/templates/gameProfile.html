@@ -19,6 +19,14 @@
 <div class="col-sm-4 col-md-8">
     <blockquote>
         <p th:text="${title}" >Bruce Wayne</p>
+        <div class="content">
+            <a href="#" th:href="@{/games/profile/{gameTitle}/vote/1/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
+            <a href="#" th:href="@{/games/profile/{gameTitle}/vote/2/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
+            <a href="#" th:href="@{/games/profile/{gameTitle}/vote/3/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
+            <a href="#" th:href="@{/games/profile/{gameTitle}/vote/4/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
+            <a href="#" th:href="@{/games/profile/{gameTitle}/vote/5/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
+        </div>
+        <p th:text="'Ocena: ' + ${rating} + ' (' + ${votes_amount} + ' ocen)'"> Ocena: </p>
         <small><cite title="Source Title" th:text="${about}">Gotham, United Kingdom  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
     </blockquote>
     <p th:text="${developer}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>

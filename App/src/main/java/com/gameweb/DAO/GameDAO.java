@@ -58,9 +58,20 @@ public class GameDAO {
                     game.setDeveloper(resultSet.getString("developer"));
                     game.setReleaseDate(resultSet.getDate("release_date"));
                     game.setCover(resultSet.getBytes("cover"));
+                    game.setRating(resultSet.getDouble("rating"));
+                    game.setVotesSum(resultSet.getInt("votes_sum"));
+                    game.setVotesAmount(resultSet.getInt("votes_amount"));
                     return game;
                 }
             },title);
 
+    }
+
+    public void updateGameRating(Integer votesAmount, Integer votesSum, Double rating, String title) {
+            try {
+                jdbcTemplate.update(queries.U_GAME_RATING, votesAmount, votesSum, rating, title);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
     }
 }

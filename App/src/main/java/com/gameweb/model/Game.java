@@ -17,7 +17,9 @@ public class Game {
     private String developer;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date releaseDate;
-    private Double avgRating;
+    private Double rating;
+    private Integer votesAmount;
+    private Integer votesSum;
     private Integer masterId;
 
     public Game(){
@@ -27,7 +29,9 @@ public class Game {
     public Game(String title, Integer masterId) {
         this.title = title;
         this.masterId = masterId;
-        this.avgRating = 0.0d;
+        this.rating = 0.0d;
+        this.votesAmount = 0;
+        this.votesSum = 0;
     }
 
     public Integer getId() {
@@ -62,14 +66,6 @@ public class Game {
         this.cover = cover;
     }
 
-    public Double getAvgRating() {
-        return avgRating;
-    }
-
-    public void setAvgRating(Double avgRating) {
-        this.avgRating = avgRating;
-    }
-
     public Integer getMasterId() {
         return masterId;
     }
@@ -92,5 +88,29 @@ public class Game {
 
     public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
+    }
+
+    public Integer getVotesAmount() {
+        return votesAmount;
+    }
+
+    public void setVotesAmount(Integer votesAmount) {
+        this.votesAmount = votesAmount;
+    }
+
+    public Integer getVotesSum() {
+        return votesSum;
+    }
+
+    public void setVotesSum(Integer votesSum) {
+        this.votesSum = votesSum;
     }
 }

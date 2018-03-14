@@ -23,6 +23,9 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+
+
+
 /**
  * Created by Kamil on 2017-11-29.
  */
@@ -123,6 +126,8 @@ public class GameController {
         modelAndView.addObject("about", game.getAbout());
         modelAndView.addObject("developer", game.getDeveloper());
         modelAndView.addObject("releaseDate",game.getReleaseDate());
+        modelAndView.addObject("rating", Math.round(game.getRating()));
+        modelAndView.addObject("votes_amount", game.getVotesAmount());
         modelAndView.setViewName("/gameProfile");
         return modelAndView;
     }
@@ -177,6 +182,16 @@ public class GameController {
         return  modelAndView;
     }
 
-
+    @RequestMapping(value = "/games/profile/{gameTitle}/vote/{vote}", method = RequestMethod.GET)
+    public ModelAndView addVote(@PathVariable("gameTitle") String gameTitle, @PathVariable("vote") Integer vote){
+        Game game = gameService.getGameByTitle(gameTitle);
+        game.setVotesAmount(game.getVotesAmount()+1);
+        game.setVotesSum(game.getVotesSum()+vote);
+        game.setRating( game.getVotesSum().doubleValue()  / game.getVotesAmount().doubleValue());
+        gameService.updateGameRating(game);
+        modelAndView.clear();
+        modelAndView.setViewName("redirect:/games/profile/"+gameTitle.replace(" ","%20"));
+        return modelAndView;
+    }
 
 }

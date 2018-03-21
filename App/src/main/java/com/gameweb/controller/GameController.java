@@ -131,9 +131,11 @@ public class GameController {
         modelAndView.addObject("rating", Math.round(game.getRating()));
         modelAndView.addObject("votes_amount", game.getVotesAmount());
         modelAndView.addObject("comment", new Comment());
-        modelAndView.addObject("COSTAM", reviewService.getReviewsPerGame(gameTitle).get(0).getReviewTitle());
-        modelAndView.addObject("costam_id", reviewService.getReviewsPerGame(gameTitle).get(0).getId());
-
+        if (reviewService.getReviewsPerGame(gameTitle).size() > 0 ) {
+            modelAndView.addObject("COSTAM", reviewService.getReviewsPerGame(gameTitle).get(0).getReviewTitle());
+            modelAndView.addObject("costam_id", reviewService.getReviewsPerGame(gameTitle).get(0).getId());
+            modelAndView.addObject("costamcontent", reviewService.getReviewsPerGame(gameTitle).get(0).getContent().substring(0,20));
+        }
         modelAndView.setViewName("/gameProfile");
         return modelAndView;
     }

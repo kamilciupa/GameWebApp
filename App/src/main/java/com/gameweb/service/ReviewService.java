@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReviewService {
 
@@ -22,4 +24,6 @@ public class ReviewService {
     public Review getReviewById(Integer reviewId) {
         return reviewDAO.getReviewById(reviewId);
     }
+
+    public List<Review> getReviewsPerGame(String gameTitle) { return  reviewDAO.getReviewsPerGame(gameTitle);}
 }

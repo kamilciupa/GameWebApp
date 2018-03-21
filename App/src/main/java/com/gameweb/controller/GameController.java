@@ -1,8 +1,10 @@
 package com.gameweb.controller;
 
+import com.gameweb.model.Comment;
 import com.gameweb.model.Game;
 import com.gameweb.model.Review;
 import com.gameweb.model.User;
+import com.gameweb.service.CommentService;
 import com.gameweb.service.GameService;
 import com.gameweb.service.ReviewService;
 import com.gameweb.service.UserService;
@@ -128,6 +130,10 @@ public class GameController {
         modelAndView.addObject("releaseDate",game.getReleaseDate());
         modelAndView.addObject("rating", Math.round(game.getRating()));
         modelAndView.addObject("votes_amount", game.getVotesAmount());
+        modelAndView.addObject("comment", new Comment());
+        modelAndView.addObject("COSTAM", reviewService.getReviewsPerGame(gameTitle).get(0).getReviewTitle());
+        modelAndView.addObject("costam_id", reviewService.getReviewsPerGame(gameTitle).get(0).getId());
+
         modelAndView.setViewName("/gameProfile");
         return modelAndView;
     }
@@ -194,4 +200,25 @@ public class GameController {
         return modelAndView;
     }
 
+//    @RequestMapping(value = "/games/profile/{gameTitle}/comments/add", method = RequestMethod.POST)
+
+
+    @Autowired
+    CommentService commentService;
+
+    @RequestMapping(value = "games/profile/{gameTitle}/addCom", method = RequestMethod.POST, params = "action=addComm")
+    public ModelAndView addCommentToGame(@Valid Comment comment,@PathVariable("gameTitle") String gameTitle,BindingResult bindingResult, HttpServletRequest request){
+        int gameId = gameService.getGameByTitle(gameTitle).getId();
+        Principal principal = request.getUserPrincipal();
+        User user = userService.getUserByName( principal.getName());
+
+        comment.setKey_value(gameId);
+        comment.setAuthor(user.getId());
+        comment.setType("G");
+        commentService.addComment(comment);
+
+        modelAndView.clear();
+        modelAndView.setViewName("redirect:/games/profile/"+gameTitle.replace(" ","%20"));
+        return modelAndView;
+    }
 }

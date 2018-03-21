@@ -34,7 +34,20 @@
 </div>
 </div>
 </div>
+<div class="panel panel-info">
+    <div class="panel-body">
+ <a href="#" th:href="@{/reviews/{id}/(id=${costam_id})}"><p th:text="${COSTAM}">sadasdas</p></a>
+    </div>
+</div>
 
+<div class="panel panel-info">
+    <div class="panel-body">
+       <form action="#" th:action="@{/games/profile/{gameTitle}/addCom/(gameTitle=${title})}" th:object="${comment}" method="post">
+            <textarea class="form-control" name="addComment" id="addComment" th:field="*{content}" rows="5"></textarea>
+            <button class="btn btn-warning" type="submit" name="action" value="addComm">Dodaj komentarz</button>
+       </form>
+    </div>
+</div>
 
 
 <header th:replace="layout :: footer" />

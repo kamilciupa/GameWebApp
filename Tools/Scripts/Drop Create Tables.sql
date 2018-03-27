@@ -78,6 +78,14 @@ key_value bigserial references games(id),
 author bigserial references users(id)
 );
 
+create table user_vote 
+(
+user_id bigint, 
+game_id bigint,
+vote integer ,
+constraint user_vote_fkey_us foreign key (user_id) references users(id),
+constraint user_vote_fkey_gam foreign key (game_id) references games(id)
+);
 
 
 

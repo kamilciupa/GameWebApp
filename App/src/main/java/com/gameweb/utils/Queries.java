@@ -15,7 +15,7 @@ public class Queries
     static public final String S_GAMETITLE_BY_ID = "SELECT title FROM games WHERE id =?";
     static public final String S_REVIEWS = "SELECT * FROM reviews";
     static public final String S_CATEGORIES = "SELECT * FROM categories";
-
+    static public final String S_IS_VOTED = "SELECT vote FROM user_vote where game_id = ? and user_id = ?";
 
     static public final String S_GET_DEF_AVATAR = "SELECT photo FROM photo_def WHERE id = 1";
 
@@ -27,6 +27,8 @@ public class Queries
     static public final String I_REVIEW = "INSERT INTO reviews (title, content, key_value, author) VALUES (?,?,?,?)";
     static public final String I_USER_ROLE = "INSERT INTO user_roles (username, role) VALUES (?,?)";
     static public final String I_CATEGORY_GAME = "INSERT INTO categories_games (cat_id, game_id) values (?,?)";
+    static public final String I_USER_VOTE_MAP = "INSERT INTO user_vote (user_id, game_id, vote)\n" +
+            " values (?,(select id from games where title = ?),?);";
 
 
     static public final String U_USER_ABOUT = "UPDATE users set about = ? where username = ?";
@@ -40,4 +42,5 @@ public class Queries
     public static final String U_GAME_RATING = "UPDATE games SET votes_amount = ? , votes_sum = ?, rating = ? where title = ?";
     public static final String I_COMMENT = "INSERT INTO commments (content, parent, type, key_value, author) values (?,?,?,?,?)";
     public static final String S_GET_REVIEWS_PER_GAME = "SELECT id, title, content, key_value, author FROM reviews where key_value = (SELECT id FROM games where title = ?) ";
+    public static final String S_VOTE_MAPPING = "SELECT count(1) vote FROM user_vote where user_id = ? and game_id = (select id from games where title = ?)";
 }

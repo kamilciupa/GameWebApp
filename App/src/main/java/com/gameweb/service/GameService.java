@@ -38,6 +38,18 @@ public class GameService {
 
     public List<Game> getGamesTitles(){ return  gameDAO.getGamesTitles();}
 
-    public void updateGameRating(Game game) { gameDAO.updateGameRating(game.getVotesAmount(), game.getVotesSum(), game.getRating(), game.getTitle());
+    public void updateGameRating(Game game) {
+        gameDAO.updateGameRating(game.getVotesAmount(), game.getVotesSum(), game.getRating(), game.getTitle());
+    }
+
+    public boolean isVoted(Integer userId, String gameTitle){
+        if (!gameDAO.getVoteMapping(userId,gameTitle).equals(0))
+            return true;
+        else
+            return false;
+    }
+
+    public void addVoteMapping(Integer vote, Integer user_id, String gameTitle){
+        gameDAO.addVoteMapping(vote,user_id,gameTitle);
     }
 }

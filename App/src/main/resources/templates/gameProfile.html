@@ -25,6 +25,7 @@
             <a href="#" th:href="@{/games/profile/{gameTitle}/vote/3/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
             <a href="#" th:href="@{/games/profile/{gameTitle}/vote/4/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
             <a href="#" th:href="@{/games/profile/{gameTitle}/vote/5/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
+            <p th:text="${isVoted}"></p>
         </div>
         <p th:text="'Ocena: ' + ${rating} + ' (' + ${votes_amount} + ' ocen)'"> Ocena: </p>
         <small><cite title="Source Title" th:text="${about}">Gotham, United Kingdom  <i class="glyphicon glyphicon-map-marker"></i></cite></small>

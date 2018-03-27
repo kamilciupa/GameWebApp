@@ -105,9 +105,15 @@ public class GameController {
     }
 
     @RequestMapping(value = "games/profile/{gameTitle}", method = RequestMethod.GET)
-    public ModelAndView getProfileGame(@PathVariable("gameTitle") String gameTitle){
+    public ModelAndView getProfileGame(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
         Game game = gameService.getGameByTitle(gameTitle);
 
+        Principal principal = request.getUserPrincipal();
+        User user = userService.getUserByName( principal.getName());
+        if(gameService.isVoted(user.getId(), gameTitle))
+            modelAndView.addObject("isVoted", "Zagłosowałeś już na tę grę");
+        else
+            modelAndView.addObject("isVoted", "Oceń grę!");
 
         String s = "";
         byte[] bytes;
@@ -191,14 +197,20 @@ public class GameController {
     }
 
     @RequestMapping(value = "/games/profile/{gameTitle}/vote/{vote}", method = RequestMethod.GET)
-    public ModelAndView addVote(@PathVariable("gameTitle") String gameTitle, @PathVariable("vote") Integer vote){
+    public ModelAndView addVote(@PathVariable("gameTitle") String gameTitle, @PathVariable("vote") Integer vote, HttpServletRequest request){
         Game game = gameService.getGameByTitle(gameTitle);
-        game.setVotesAmount(game.getVotesAmount()+1);
-        game.setVotesSum(game.getVotesSum()+vote);
-        game.setRating( game.getVotesSum().doubleValue()  / game.getVotesAmount().doubleValue());
-        gameService.updateGameRating(game);
-        modelAndView.clear();
-        modelAndView.setViewName("redirect:/games/profile/"+gameTitle.replace(" ","%20"));
+        Principal principal = request.getUserPrincipal();
+        User user = userService.getUserByName( principal.getName());
+
+        if(!gameService.isVoted(user.getId(), gameTitle)) {
+            game.setVotesAmount(game.getVotesAmount() + 1);
+            game.setVotesSum(game.getVotesSum() + vote);
+            game.setRating(game.getVotesSum().doubleValue() / game.getVotesAmount().doubleValue());
+            gameService.updateGameRating(game);
+            gameService.addVoteMapping(vote,user.getId(),gameTitle);
+            modelAndView.clear();
+        }
+            modelAndView.setViewName("redirect:/games/profile/" + gameTitle.replace(" ", "%20"));
         return modelAndView;
     }
 

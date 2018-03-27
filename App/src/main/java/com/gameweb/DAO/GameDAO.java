@@ -74,4 +74,31 @@ public class GameDAO {
                 e.printStackTrace();
             }
     }
+
+    public void addVoteMapping(Integer vote, Integer user_id, String gameTitle) {
+            try {
+                    jdbcTemplate.update(queries.I_USER_VOTE_MAP, user_id, gameTitle , vote );
+                } catch (Exception e ){
+                e.printStackTrace();
+            }
+    }
+
+    public Integer getVoteMapping(Integer userId, String gameTitle){
+        Integer vote = 0;
+            try {
+                vote = jdbcTemplate.queryForObject(queries.S_VOTE_MAPPING, new RowMapper<Integer>() {
+                    @Override
+                    public Integer mapRow(ResultSet rs, int rownumber) throws SQLException {
+                        //TODO Usunąc println
+                        System.out.println("To mamy z DAO" + rs.getInt("vote"));
+                        return rs.getInt("vote");
+                    }
+                },userId,gameTitle);
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+        return vote;
+    }
+
 }

@@ -37,7 +37,10 @@
 </div>
 <div class="panel panel-info">
     <div class="panel-body">
-        <h3>Recenzje</h3>
+
+        <h3>Recenzje
+        <a href="#" th:href="@{/games/profile/{gameTitle}/addReview/(gameTitle=${title})}"><small class="text-muted">Dodaj recenzję</small></a>
+        </h3>
 
             <div class="row">
                 <div class="col-md-4">
@@ -76,7 +79,7 @@
 </div>
 
 
-<header th:replace="layout :: footer" />
+<!--<header th:replace="layout :: footer" />-->
 
 </body>
 </html>

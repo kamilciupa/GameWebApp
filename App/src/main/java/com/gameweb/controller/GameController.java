@@ -51,7 +51,7 @@ public class GameController {
     @RequestMapping(value = "/games/addGame", method = RequestMethod.GET)
     public ModelAndView addGameShow() {
         modelAndView.addObject("game", new Game());
-        modelAndView.addObject("p", "Dodaj grę");
+
         modelAndView.setViewName("/addGame");
         return modelAndView;
     }
@@ -82,9 +82,9 @@ public class GameController {
         if(!hasErrors){
             game.setCover(file.getBytes());
             System.out.println(file.getName());
-            modelAndView.addObject("p", "Sukces");
             gameService.addGame(game, user.getId());
             modelAndView.setViewName("/profile");
+            modelAndView.setViewName("redirect:/games/profile/" + game.getTitle().replace(" ", "%20"));
         } else {
             modelAndView.setViewName("/registrationTest");
         }
@@ -106,8 +106,9 @@ public class GameController {
 
     @RequestMapping(value = "games/profile/{gameTitle}", method = RequestMethod.GET)
     public ModelAndView getProfileGame(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
-        Game game = gameService.getGameByTitle(gameTitle);
 
+        modelAndView.clear();
+        Game game = gameService.getGameByTitle(gameTitle);
         Principal principal = request.getUserPrincipal();
         User user = userService.getUserByName( principal.getName());
         if(gameService.isVoted(user.getId(), gameTitle))
@@ -150,6 +151,7 @@ public class GameController {
     public ModelAndView getAddReview(@PathVariable("gameTitle") String gameTitle){
         Game game = gameService.getGameByTitle(gameTitle);
         modelAndView.addObject("review", new Review());
+        modelAndView.addObject("gameTitle", gameTitle);
         modelAndView.addObject("title", game.getTitle());
         modelAndView.setViewName("/addReview");
         return modelAndView;
@@ -163,7 +165,7 @@ public class GameController {
         User user = userService.getUserByName( principal.getName());
         Game game =  gameService.getGameByTitle(gameTitle);
         modelAndView.addObject("review", new Review());
-
+        modelAndView.addObject("gameTitle", gameTitle);
         boolean hasErrors = false;
         if(bindingResult.hasErrors()) {
             modelAndView.addObject("p", "B L A D ");
@@ -210,6 +212,7 @@ public class GameController {
             gameService.addVoteMapping(vote,user.getId(),gameTitle);
             modelAndView.clear();
         }
+          modelAndView.clear();
             modelAndView.setViewName("redirect:/games/profile/" + gameTitle.replace(" ", "%20"));
         return modelAndView;
     }

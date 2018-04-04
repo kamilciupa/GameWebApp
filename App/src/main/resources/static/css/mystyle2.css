@@ -1,21 +1,12 @@
 
 
 body {
-    /*background: #eee !important;	*/
-    height: 100%;
+     background: #eee  ;
+
 }
 
 .bg {
-    /* The image used */
-    background-image: url("bsg.jpeg");
-
-    /* Full height */
-    height: 100%;
-
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  background: #3a3a3a;
 }
 
 .wrapper {
@@ -23,8 +14,17 @@ body {
     margin-bottom: 80px;
 }
 
+
 .form-signin {
     max-width: 380px;
+    padding: 15px 35px 45px;
+    margin: 0 auto;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    /*x-fast*/
+}
+.form-signin2 {
+    max-width: 1380px;
     padding: 15px 35px 45px;
     margin: 0 auto;
     background-color: #fff;

@@ -43,4 +43,6 @@ public class Queries
     public static final String I_COMMENT = "INSERT INTO commments (content, parent, type, key_value, author) values (?,?,?,?,?)";
     public static final String S_GET_REVIEWS_PER_GAME = "SELECT id, title, content, key_value, author FROM reviews where key_value = (SELECT id FROM games where title = ?) ";
     public static final String S_VOTE_MAPPING = "SELECT count(1) vote FROM user_vote where user_id = ? and game_id = (select id from games where title = ?)";
+    public static final String S_GET_COMMS = "SELECT c.*, u.username,u.avatar  FROM commments c, users u WHERE c.type = 'G' and c.key_value = (SELECT id FROM games WHERE title = ?) and c.author = u.id";
+    public static final String S_GET_CHILD_COMMS = "SELECT * FROM comments WHERE parent = ?";
 }

@@ -18,7 +18,9 @@
         </div>
 <div class="col-sm-4 col-md-8">
     <blockquote>
-        <p th:text="${title}" >Bruce Wayne</p>
+        <div class="page-header">
+        <h2 th:text="${title}" >Bruce Wayne</h2>
+        </div>
         <div class="content">
             <a href="#" th:href="@{/games/profile/{gameTitle}/vote/1/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
             <a href="#" th:href="@{/games/profile/{gameTitle}/vote/2/(gameTitle=${title})}"><i class="glyphicon glyphicon-star"></i></a>
@@ -38,10 +40,11 @@
 <div class="panel panel-info">
     <div class="panel-body">
 
+        <div class="page-header">
         <h3>Recenzje
         <a href="#" th:href="@{/games/profile/{gameTitle}/addReview/(gameTitle=${title})}"><small class="text-muted">Dodaj recenzję</small></a>
         </h3>
-
+        </div>
             <div class="row">
                 <div class="col-md-4">
             <blockquote>
@@ -70,7 +73,9 @@
 
 <div class="panel panel-info">
     <div class="panel-body">
-        <h3>Komentarze</h3>
+        <div class="page-header">
+        <h3>Dodaj komentarz</h3>
+        </div>
        <form action="#" th:action="@{/games/profile/{gameTitle}/addCom/(gameTitle=${title})}" th:object="${comment}" method="post">
             <textarea class="form-control" name="addComment" id="addComment" th:field="*{content}" rows="1"></textarea>
             <button class="btn btn-warning" type="submit" name="action" value="addComm">Dodaj komentarz</button>
@@ -78,6 +83,37 @@
     </div>
 </div>
 
+
+<div class="panel panel-info">
+    <div class="panel-body">
+<!--<div class="container">-->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="page-header">
+                <h3><small class="pull-right" th:text="${commentsAmount} + ' komentarzy'">45 comments</small> Komentarze </h3>
+            </div>
+            <div class="comments-list">
+
+                <p th:each="comments:${commentsList}">
+                <div class="media">
+                    <a class="media-left" href="#">
+                        <!--<img src="http://lorempixel.com/40/40/people/3/"/>-->
+                        <img th:src="${comments.author_avatar}" height="50" width="50" />
+                    </a>
+                    <div class="media-body">
+
+                        <h4 class="media-heading user_name" th:text="${comments.Author_name}">Baltej Singh</h4>
+                        <span th:text="${comments.content}">asdasdasdasdasdasdsad</span>
+
+                        <p><small><a href="">Odpowiedz</a></small></p>
+                    </div>
+                </div>
+                </p>
+            </div>
+        </div>
+    </div>
+<!--</div>-->
+    </div></div>
 
 <!--<header th:replace="layout :: footer" />-->
 

@@ -8,7 +8,8 @@ public class Comment {
     private String type; // G - gra R - recenzja
     private int key_value;
     private int author;
-
+    private String author_name;
+    private String author_avatar;
 
     public int getId() {
         return id;
@@ -56,5 +57,21 @@ public class Comment {
 
     public void setAuthor(int author) {
         this.author = author;
+    }
+
+    public String getAuthor_name() {
+        return author_name;
+    }
+
+    public void setAuthor_name(String author_name) {
+        this.author_name = author_name;
+    }
+
+    public String getAuthor_avatar() {
+        return author_avatar;
+    }
+
+    public void setAuthor_avatar(String author_avatar) {
+        this.author_avatar = author_avatar;
     }
 }

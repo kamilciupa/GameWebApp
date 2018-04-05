@@ -23,6 +23,7 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -138,6 +139,12 @@ public class GameController {
         modelAndView.addObject("rating", Math.round(game.getRating()));
         modelAndView.addObject("votes_amount", game.getVotesAmount());
         modelAndView.addObject("comment", new Comment());
+//        modelAndView.addObject("comment_content", commentService.getMainComments(gameTitle).get(0).getContent());
+//        modelAndView.addObject("comment_author", commentService.getMainComments(gameTitle).get(0).getAuthor_name());
+        List<Comment> a = commentService.getMainComments(gameTitle);
+        Collections.reverse(a);
+        modelAndView.addObject("commentsList", a);
+        modelAndView.addObject("commentsAmount", String.valueOf(commentService.getMainComments(gameTitle).size()));
         if (reviewService.getReviewsPerGame(gameTitle).size() > 0 ) {
             modelAndView.addObject("COSTAM", reviewService.getReviewsPerGame(gameTitle).get(0).getReviewTitle());
             modelAndView.addObject("costam_id", reviewService.getReviewsPerGame(gameTitle).get(0).getId());
@@ -238,4 +245,6 @@ public class GameController {
         modelAndView.setViewName("redirect:/games/profile/"+gameTitle.replace(" ","%20"));
         return modelAndView;
     }
+
+
 }

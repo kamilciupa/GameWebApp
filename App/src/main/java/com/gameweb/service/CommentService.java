@@ -9,15 +9,25 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CommentService {
 
 
     @Autowired
     CommentDAO commentDAO;
+    @Autowired
+    UserService userService;
 
     public ResponseEntity addComment(Comment comment) {
         commentDAO.addComment(comment);
         return new ResponseEntity(HttpStatus.OK);
     }
+
+    public List<Comment> getMainComments(String gameTitle){
+        return commentDAO.getCommentsForGame(gameTitle);
+    }
+
+
 }

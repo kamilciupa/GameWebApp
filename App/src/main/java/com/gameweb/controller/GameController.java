@@ -9,10 +9,6 @@ import com.gameweb.service.GameService;
 import com.gameweb.service.ReviewService;
 import com.gameweb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,11 +23,6 @@ import java.util.Collections;
 import java.util.List;
 
 
-
-
-/**
- * Created by Kamil on 2017-11-29.
- */
 @RestController
 public class GameController {
 
@@ -42,17 +33,14 @@ public class GameController {
     UserService userService;
     @Autowired
     ReviewService reviewService;
+    @Autowired
+    CommentService commentService;
 
     ModelAndView modelAndView = new ModelAndView();
-
-    /*
-     * Rejestracja
-     */
 
     @RequestMapping(value = "/games/addGame", method = RequestMethod.GET)
     public ModelAndView addGameShow() {
         modelAndView.addObject("game", new Game());
-
         modelAndView.setViewName("/addGame");
         return modelAndView;
     }
@@ -62,7 +50,6 @@ public class GameController {
         Principal principal = request.getUserPrincipal();
         User user = userService.getUserByName( principal.getName());
         modelAndView.addObject("game", new Game());
-
         boolean hasErrors = false;
         if(bindingResult.hasErrors()) {
             modelAndView.addObject("p", "B L A D ");
@@ -85,6 +72,7 @@ public class GameController {
             System.out.println(file.getName());
             gameService.addGame(game, user.getId());
             modelAndView.setViewName("/profile");
+            modelAndView.clear();
             modelAndView.setViewName("redirect:/games/profile/" + game.getTitle().replace(" ", "%20"));
         } else {
             modelAndView.setViewName("/registrationTest");
@@ -94,10 +82,9 @@ public class GameController {
         return  modelAndView;
     }
 
-    @RequestMapping(value = "games/all", method = RequestMethod.GET)
+    @RequestMapping(value = "/games/all", method = RequestMethod.GET)
     public ModelAndView getAllGames(){
-        List<Game> games = new ArrayList<Game>();
-        games = gameService.getGamesTitles();
+        List<Game> games = gameService.getGamesTitles();
         System.out.println(games.size());
         System.out.println(games.get(1));
         modelAndView.addObject("games", games);
@@ -112,11 +99,36 @@ public class GameController {
         Game game = gameService.getGameByTitle(gameTitle);
         Principal principal = request.getUserPrincipal();
         User user = userService.getUserByName( principal.getName());
+
         if(gameService.isVoted(user.getId(), gameTitle))
             modelAndView.addObject("isVoted", "Zagłosowałeś już na tę grę");
         else
             modelAndView.addObject("isVoted", "Oceń grę!");
 
+        String s = createAvatarString(game);
+
+        modelAndView.addObject("img", s);
+        modelAndView.addObject("title", game.getTitle());
+        modelAndView.addObject("about", game.getAbout());
+        modelAndView.addObject("developer", game.getDeveloper());
+        modelAndView.addObject("releaseDate",game.getReleaseDate());
+        modelAndView.addObject("rating", Math.round(game.getRating()));
+        modelAndView.addObject("votes_amount", game.getVotesAmount());
+        modelAndView.addObject("comment", new Comment());
+        List<Comment> a = commentService.getMainComments(gameTitle);
+        Collections.reverse(a);
+        modelAndView.addObject("commentsList", a);
+        modelAndView.addObject("commentsAmount", String.valueOf(commentService.getMainComments(gameTitle).size()));
+        if (reviewService.getReviewsPerGame(gameTitle).size() > 0 ) {
+            modelAndView.addObject("COSTAM", reviewService.getReviewsPerGame(gameTitle).get(0).getReviewTitle());
+            modelAndView.addObject("costam_id", reviewService.getReviewsPerGame(gameTitle).get(0).getId());
+            modelAndView.addObject("costamcontent", reviewService.getReviewsPerGame(gameTitle).get(0).getContent().substring(0,20));
+        }
+        modelAndView.setViewName("/gameProfile");
+        return modelAndView;
+    }
+
+    private String createAvatarString(Game game) {
         String s = "";
         byte[] bytes;
         try {
@@ -130,28 +142,7 @@ public class GameController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        modelAndView.addObject("img", "data:image/png;base64,"+ s);
-        modelAndView.addObject("title", game.getTitle());
-        modelAndView.addObject("about", game.getAbout());
-        modelAndView.addObject("developer", game.getDeveloper());
-        modelAndView.addObject("releaseDate",game.getReleaseDate());
-        modelAndView.addObject("rating", Math.round(game.getRating()));
-        modelAndView.addObject("votes_amount", game.getVotesAmount());
-        modelAndView.addObject("comment", new Comment());
-//        modelAndView.addObject("comment_content", commentService.getMainComments(gameTitle).get(0).getContent());
-//        modelAndView.addObject("comment_author", commentService.getMainComments(gameTitle).get(0).getAuthor_name());
-        List<Comment> a = commentService.getMainComments(gameTitle);
-        Collections.reverse(a);
-        modelAndView.addObject("commentsList", a);
-        modelAndView.addObject("commentsAmount", String.valueOf(commentService.getMainComments(gameTitle).size()));
-        if (reviewService.getReviewsPerGame(gameTitle).size() > 0 ) {
-            modelAndView.addObject("COSTAM", reviewService.getReviewsPerGame(gameTitle).get(0).getReviewTitle());
-            modelAndView.addObject("costam_id", reviewService.getReviewsPerGame(gameTitle).get(0).getId());
-            modelAndView.addObject("costamcontent", reviewService.getReviewsPerGame(gameTitle).get(0).getContent().substring(0,20));
-        }
-        modelAndView.setViewName("/gameProfile");
-        return modelAndView;
+        return "data:image/png;base64,"+s;
     }
 
     @RequestMapping(value = "games/profile/{gameTitle}/addReview", method = RequestMethod.GET)
@@ -173,12 +164,12 @@ public class GameController {
         Game game =  gameService.getGameByTitle(gameTitle);
         modelAndView.addObject("review", new Review());
         modelAndView.addObject("gameTitle", gameTitle);
+
         boolean hasErrors = false;
         if(bindingResult.hasErrors()) {
             modelAndView.addObject("p", "B L A D ");
             hasErrors = true;
         }
-        System.out.println(review.getReviewTitle());System.out.println(review.getReviewTitle());System.out.println(review.getReviewTitle());
         if(!hasErrors){
             review.setParentId(user.getId());
             review.setKey_value(game.getId());
@@ -187,7 +178,6 @@ public class GameController {
         } else {
             modelAndView.setViewName("/registrationTest");
         }
-
         return  modelAndView;
     }
 
@@ -224,11 +214,6 @@ public class GameController {
         return modelAndView;
     }
 
-//    @RequestMapping(value = "/games/profile/{gameTitle}/comments/add", method = RequestMethod.POST)
-
-
-    @Autowired
-    CommentService commentService;
 
     @RequestMapping(value = "games/profile/{gameTitle}/addCom", method = RequestMethod.POST, params = "action=addComm")
     public ModelAndView addCommentToGame(@Valid Comment comment,@PathVariable("gameTitle") String gameTitle,BindingResult bindingResult, HttpServletRequest request){

@@ -37,6 +37,7 @@ public class GameService {
     }
 
     public List<Game> getGamesTitles(){ return  gameDAO.getGamesTitles();}
+    public List<Game> getGamesOrderedTop(){return gameDAO.getTopListGames();}
 
     public void updateGameRating(Game game) {
         gameDAO.updateGameRating(game.getVotesAmount(), game.getVotesSum(), game.getRating(), game.getTitle());

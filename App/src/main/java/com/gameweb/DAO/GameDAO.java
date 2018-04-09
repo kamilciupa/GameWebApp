@@ -101,4 +101,26 @@ public class GameDAO {
         return vote;
     }
 
+
+    public List<Game> getTopListGames(){
+        List<Game> a = jdbcTemplate.query(queries.S_GAMES_ORDERED_BY_RATING, new RowMapper<Game>() {
+            @Override
+            public Game mapRow(ResultSet resultSet, int i) throws SQLException {
+                Game e = new Game();
+                e.setVotesAmount(resultSet.getInt("votes_amount"));
+                e.setVotesSum(resultSet.getInt("votes_sum"));
+                e.setRating(resultSet.getDouble("rating"));
+                e.setTitle(resultSet.getString("title"));
+                e.setId(resultSet.getInt("id"));
+                e.setCover(resultSet.getBytes("cover"));
+                e.setMasterId(resultSet.getInt("masterid"));
+                e.setAbout(resultSet.getString("about"));
+                e.setDeveloper(resultSet.getString("developer"));
+                e.setReleaseDate(resultSet.getDate("release_date"));
+                return e;
+            }
+        });
+        return a;
+    }
+
 }

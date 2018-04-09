@@ -100,6 +100,20 @@ public class GameController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/games/top", method = RequestMethod.GET)
+    public ModelAndView getAllGamesToplist(HttpServletRequest request){
+        getUsernameForModel(request);
+        List<Game> games = gameService.getGamesOrderedTop();
+        List<String> gTitles = new ArrayList<>();
+        for(Game g : games){
+            gTitles.add(g.getTitle());
+        }
+        Collections.reverse(gTitles);
+        modelAndView.addObject("games", gTitles);
+        modelAndView.setViewName("/toplist");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "games/profile/{gameTitle}", method = RequestMethod.GET)
     public ModelAndView getProfileGame(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
 

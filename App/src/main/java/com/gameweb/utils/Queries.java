@@ -11,6 +11,7 @@ public class Queries
     static public final String S_USER_BY_NAME = "SELECT * FROM users WHERE username = ?";
     static public final String S_USERNAME_BY_ID = "SELECT username FROM users WHERE id = ?";
     static public final String S_GAMES = "SELECT * FROM games";
+    static public final String S_GAMES_ORDERED_BY_RATING = "select * from games order by rating desc,votes_sum desc";
     static public final String S_GAME_BY_TITLE = "SELECT * FROM games WHERE title = ?";
     static public final String S_GAMETITLE_BY_ID = "SELECT title FROM games WHERE id =?";
     static public final String S_REVIEWS = "SELECT * FROM reviews";

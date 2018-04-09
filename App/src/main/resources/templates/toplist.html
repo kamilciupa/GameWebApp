@@ -14,12 +14,11 @@
 
     <div class="panel panel-info">
         <div class="panel-body">
-        <div>
-            <h2>Recent Posts</h2>
-            <a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p.title})}" ><div th:text="${p.title}"></div></a>
-        </div>
+    <div>
+        <h2>Najlepsze gry</h2>
+        <a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p})}" ><div th:text="${p}"></div></a>
+    </div>
         </div></div>
-
 
 
 

@@ -39,10 +39,17 @@ public class GameController {
     ModelAndView modelAndView = new ModelAndView();
 
     @RequestMapping(value = "/games/addGame", method = RequestMethod.GET)
-    public ModelAndView addGameShow() {
+    public ModelAndView addGameShow(HttpServletRequest request){
+        getUsernameForModel(request);
         modelAndView.addObject("game", new Game());
         modelAndView.setViewName("/addGame");
         return modelAndView;
+    }
+
+    private void getUsernameForModel(HttpServletRequest request) {
+        Principal principal = request.getUserPrincipal();
+        User user = userService.getUserByName( principal.getName());
+        modelAndView.addObject("username",user.getUsername());
     }
 
     @RequestMapping(value = "/games/addGame", method = RequestMethod.POST)
@@ -83,7 +90,8 @@ public class GameController {
     }
 
     @RequestMapping(value = "/games/all", method = RequestMethod.GET)
-    public ModelAndView getAllGames(){
+    public ModelAndView getAllGames(HttpServletRequest request){
+        getUsernameForModel(request);
         List<Game> games = gameService.getGamesTitles();
         System.out.println(games.size());
         System.out.println(games.get(1));
@@ -96,6 +104,7 @@ public class GameController {
     public ModelAndView getProfileGame(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
 
         modelAndView.clear();
+        getUsernameForModel(request);
         Game game = gameService.getGameByTitle(gameTitle);
         Principal principal = request.getUserPrincipal();
         User user = userService.getUserByName( principal.getName());
@@ -167,7 +176,8 @@ public class GameController {
     }
 
     @RequestMapping(value = "games/profile/{gameTitle}/addReview", method = RequestMethod.GET)
-    public ModelAndView getAddReview(@PathVariable("gameTitle") String gameTitle){
+    public ModelAndView getAddReview(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
+        getUsernameForModel(request);
         Game game = gameService.getGameByTitle(gameTitle);
         modelAndView.addObject("review", new Review());
         modelAndView.addObject("gameTitle", gameTitle);
@@ -205,7 +215,8 @@ public class GameController {
     //TODO Przenieść to do kontrolera od recenzji -> Stworzyć kontroler od recenzji
 
     @RequestMapping(value = "/reviews/{id}", method = RequestMethod.GET)
-    public ModelAndView getWholeReview(@PathVariable("id") Integer reviewId){
+    public ModelAndView getWholeReview(@PathVariable("id") Integer reviewId, HttpServletRequest request){
+        getUsernameForModel(request);
         Review review = reviewService.getReviewById(reviewId);
         modelAndView.addObject("content", review.getContent());
         modelAndView.addObject("title" , review.getReviewTitle());

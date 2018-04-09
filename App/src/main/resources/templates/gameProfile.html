@@ -46,24 +46,15 @@
         </h3>
         </div>
             <div class="row">
+                <p th:each="revs:${reviews}">
                 <div class="col-md-4">
             <blockquote>
-                <a href="#" th:href="@{/reviews/{id}/(id=${costam_id})}">  <p th:text="${COSTAM}" >Bruce Wayne</p></a>
-                <small><cite title="Source Title" th:text="${costamcontent}">Gotham, United Kingdom</cite></small>
+                <a href="#" th:href="@{/reviews/{id}/(id=${revs.id})}">  <p th:text="${revs.reviewTitle}" >Bruce Wayne</p></a>
+                <small><cite title="Source Title" th:text="${revs.content}">Gotham, United Kingdom</cite></small>
             </blockquote>
                 </div>
-                <div class="col-md-4">
-            <blockquote>
-                <a href="#" th:href="@{/reviews/{id}/(id=${costam_id})}">  <p th:text="${COSTAM}" >Bruce Wayne</p></a>
-                <small><cite title="Source Title" th:text="${costamcontent}">Gotham, United Kingdom</cite></small>
-            </blockquote>
-                </div>
-                <div class="col-md-4">
-                    <blockquote>
-                        <a href="#" th:href="@{/reviews/{id}/(id=${costam_id})}">  <p th:text="${COSTAM}" >Bruce Wayne</p></a>
-                        <small><cite title="Source Title" th:text="${costamcontent}">Gotham, United Kingdom</cite></small>
-                    </blockquote>
-                </div>
+            </p>
+
             </div>
 
 

@@ -8,15 +8,15 @@
 
 <header th:replace="layoutLogged :: site-header" />
 
-<!--<img  th:src="@{'data:image/png;base64,'+${img}}" />-->
+
 
 <div class="container">
     <div class="wrapper">
         <form class="form-signin2" action="#" enctype="multipart/form-data" th:action="@{/games/profile/{gameTitle}/addReview/(gameTitle=${title})}" th:object="${review}" method="post">
             <div class="containter">
-                <h2 class="form-signin-heading" ><span class="glyphicon glyphicon-lock"></span><p th:text="'Dodaj recenzję do ' +${gameTitle}"></p>  </h2>
+                <h2 class="form-signin-heading" ><span class="glyphicon glyphicon-lock"><small class="right"><a th:href="@{/games/profile/{gameTitle}/(gameTitle=${title})}">Powrót</a></small> </span><p th:text="'Dodaj recenzję do ' +${gameTitle}"></p>  </h2>
                 <input type="text" placeholder="Tytuł recenzji" name="rec" th:field="*{reviewTitle}" required="true" class="form-control"/>
-                <textarea name="about" placeholder="Treść recenzji" th:field="*{content}" cols="146" rows="15"></textarea>
+                <textarea style="resize: vertical" name="about" placeholder="Treść recenzji" th:field="*{content}"  class="form-control"></textarea>
                 <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Dodaj </button>
             </div>
         </form>

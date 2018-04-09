@@ -119,14 +119,35 @@ public class GameController {
         Collections.reverse(a);
         modelAndView.addObject("commentsList", a);
         modelAndView.addObject("commentsAmount", String.valueOf(commentService.getMainComments(gameTitle).size()));
-        if (reviewService.getReviewsPerGame(gameTitle).size() > 0 ) {
-            modelAndView.addObject("COSTAM", reviewService.getReviewsPerGame(gameTitle).get(0).getReviewTitle());
-            modelAndView.addObject("costam_id", reviewService.getReviewsPerGame(gameTitle).get(0).getId());
-            modelAndView.addObject("costamcontent", reviewService.getReviewsPerGame(gameTitle).get(0).getContent().substring(0,20));
-        }
+//        if (reviewService.getReviewsPerGame(gameTitle).size() > 0 ) {
+//            modelAndView.addObject("COSTAM", reviewService.getReviewsPerGame(gameTitle).get(0).getReviewTitle());
+//            modelAndView.addObject("costam_id", reviewService.getReviewsPerGame(gameTitle).get(0).getId());
+//            modelAndView.addObject("costamcontent", reviewService.getReviewsPerGame(gameTitle).get(0).getContent().substring(0,20));
+//        }
+        modelAndView.addObject("reviews",getThreeRevs(gameTitle));
         modelAndView.setViewName("/gameProfile");
         return modelAndView;
     }
+
+
+    private List<Review> getThreeRevs(String gameTitle){
+        List<Review> reviews = reviewService.getReviewsPerGame(gameTitle);
+        List<Review> revs = new ArrayList<Review>();
+        if (reviews.size() > 3) {
+            revs = reviews.subList(0, 3);
+        } else if (reviews.size() <= 0 ) {
+            revs.add(new Review(0,"BRAK RECENZJI", "BRAK RECENZJI"));
+        } else {
+            revs = reviews;
+        }
+
+        for (Review rev : revs){
+            if(rev.getContent().length() > 50)
+                rev.setContent(rev.getContent().substring(0,50));
+        }
+        return revs;
+    }
+
 
     private String createAvatarString(Game game) {
         String s = "";

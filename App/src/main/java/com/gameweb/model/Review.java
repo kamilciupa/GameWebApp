@@ -27,6 +27,12 @@ public class Review {
         this.rating = 0.0d;
     }
 
+    public Review(Integer id, String content, String reviewTitle){
+        this.id = id;
+        this.content = content;
+        this.reviewTitle = reviewTitle;
+    }
+
     public Integer getId() {
         return id;
     }

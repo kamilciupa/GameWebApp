@@ -17,6 +17,8 @@ public class Queries
     static public final String S_REVIEWS = "SELECT * FROM reviews";
     static public final String S_CATEGORIES = "SELECT * FROM categories";
     static public final String S_IS_VOTED = "SELECT vote FROM user_vote where game_id = ? and user_id = ?";
+    static public final String S_GAMES_LIKE = "SELECT * FROM games WHERE upper(title) like ?";
+
 
     static public final String S_GET_DEF_AVATAR = "SELECT photo FROM photo_def WHERE id = 1";
 

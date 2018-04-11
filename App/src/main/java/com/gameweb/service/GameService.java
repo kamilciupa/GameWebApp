@@ -53,4 +53,11 @@ public class GameService {
     public void addVoteMapping(Integer vote, Integer user_id, String gameTitle){
         gameDAO.addVoteMapping(vote,user_id,gameTitle);
     }
+
+    public List<Game> getSearchedGames(String searchString){
+        searchString = searchString.toUpperCase();
+        searchString.replace("%20", " ");
+        searchString = "%"+searchString+"%";
+        return gameDAO.getSearchedGames(searchString);
+    }
 }

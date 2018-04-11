@@ -93,8 +93,10 @@ public class GameController {
     public ModelAndView getAllGames(HttpServletRequest request){
         getUsernameForModel(request);
         List<Game> games = gameService.getGamesTitles();
-        System.out.println(games.size());
-        System.out.println(games.get(1));
+
+        Game g = new Game();
+        modelAndView.addObject("searchs",g);
+
         modelAndView.addObject("games", games);
         modelAndView.setViewName("/listGame");
         return modelAndView;
@@ -277,5 +279,33 @@ public class GameController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    public ModelAndView search(){
+        Game g = new Game();
+        modelAndView.addObject("searchs",g);
+        System.out.println("bleble --" + g.getTitle());
+        modelAndView.clear();
+        modelAndView.setViewName("redirect:/games/search/"+g.getTitle());
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/games/search/{searchString}", method = RequestMethod.GET)
+    public ModelAndView getSearched(@PathVariable("searchString") String searchString,HttpServletRequest request){
+        modelAndView.clear();
+        getUsernameForModel(request);
+        Game gg = new Game();
+        modelAndView.addObject("searchs",gg);
+        List<Game> listGame = gameService.getSearchedGames(searchString);
+
+
+        if(listGame.isEmpty()){
+            Game g = new Game();
+            g.setTitle("Nie znaleziono gry");
+            listGame.add(g);
+        }
+        modelAndView.addObject("result",listGame);
+        modelAndView.setViewName("searchGames");
+        return modelAndView;
+    }
 
 }

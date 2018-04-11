@@ -107,20 +107,37 @@ public class GameDAO {
             @Override
             public Game mapRow(ResultSet resultSet, int i) throws SQLException {
                 Game e = new Game();
-                e.setVotesAmount(resultSet.getInt("votes_amount"));
-                e.setVotesSum(resultSet.getInt("votes_sum"));
-                e.setRating(resultSet.getDouble("rating"));
-                e.setTitle(resultSet.getString("title"));
-                e.setId(resultSet.getInt("id"));
-                e.setCover(resultSet.getBytes("cover"));
-                e.setMasterId(resultSet.getInt("masterid"));
-                e.setAbout(resultSet.getString("about"));
-                e.setDeveloper(resultSet.getString("developer"));
-                e.setReleaseDate(resultSet.getDate("release_date"));
+                fillGameData(resultSet, e);
                 return e;
             }
         });
         return a;
+    }
+
+    public List<Game> getSearchedGames(String searchString){
+        List<Game> a = jdbcTemplate.query(queries.S_GAMES_LIKE, new RowMapper<Game>() {
+            @Override
+            public Game mapRow(ResultSet resultSet, int i) throws SQLException {
+                Game e = new Game();
+                fillGameData(resultSet, e);
+                return e;
+            }
+        },searchString);
+
+        return a;
+    }
+
+    private void fillGameData(ResultSet resultSet, Game e) throws SQLException {
+        e.setVotesAmount(resultSet.getInt("votes_amount"));
+        e.setVotesSum(resultSet.getInt("votes_sum"));
+        e.setRating(resultSet.getDouble("rating"));
+        e.setTitle(resultSet.getString("title"));
+        e.setId(resultSet.getInt("id"));
+        e.setCover(resultSet.getBytes("cover"));
+        e.setMasterId(resultSet.getInt("masterid"));
+        e.setAbout(resultSet.getString("about"));
+        e.setDeveloper(resultSet.getString("developer"));
+        e.setReleaseDate(resultSet.getDate("release_date"));
     }
 
 }

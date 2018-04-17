@@ -164,7 +164,8 @@ public class UserController {
      * Profil użytkownika
      */
     @RequestMapping(value = "/profile/{username}", method = RequestMethod.GET)
-    public ModelAndView getProfile(@PathVariable("username") String username){
+    public ModelAndView getProfile(@PathVariable("username") String username) {
+        modelAndView.clear();
         User user = userService.getUserByName(username);
         Game gg = new Game();
         modelAndView.addObject("searchS",gg);
@@ -198,6 +199,8 @@ public class UserController {
 
         User user = userService.getUserByName( principal.getName());
 
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
 
         String s = "";
         try {
@@ -211,6 +214,7 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.addObject("img", "data:image/png;base64,"+ s);
         modelAndView.addObject("username", user.getUsername());
+        modelAndView.addObject("email", user.getEmail());
         modelAndView.addObject("about", user.getAbout());
         modelAndView.setViewName("/changeUserInfo");
         return modelAndView;
@@ -226,16 +230,21 @@ public class UserController {
 
        User userOld = userService.getUserByName( principal.getName());
        userOld.setAbout(user.getAbout());
+       userOld.setEmail(user.getEmail());
 
         if(!bindingResult.hasErrors()) {
-            userService.updateAbout(userOld);
+//            userService.updateAbout(userOld);
+            userService.updateUserInfo(userOld);
         }
+
 
 
         //modelAndView.addObject("img", "data:image/png;base64,"+ s);
         modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("about", user.getAbout());
-        modelAndView.setViewName("/changeUserInfo");
+        modelAndView.clear();
+        modelAndView.setViewName("redirect:/profile/"+userOld.getUsername());
+//        modelAndView.setViewName("/changeUserInfo");
         return modelAndView;
     }
 
@@ -258,7 +267,8 @@ System.out.println("długośc bajta w upload avatar" + bytes.length);
             e.printStackTrace();
         }
        // modelAndView.addObject("img", "data:image/png;base64,"+ s);
-        modelAndView.setViewName("/changeUserInfo");
+        modelAndView.clear();
+        modelAndView.setViewName("redirect:/settings");
         return  modelAndView;
     }
 

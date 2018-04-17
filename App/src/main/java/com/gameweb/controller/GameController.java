@@ -120,9 +120,10 @@ public class GameController {
 
     @RequestMapping(value = "games/profile/{gameTitle}", method = RequestMethod.GET)
     public ModelAndView getProfileGame(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
+
+        modelAndView.clear();
         Game gg = new Game();
         modelAndView.addObject("searchS",gg);
-        modelAndView.clear();
         getUsernameForModel(request);
         Game game = gameService.getGameByTitle(gameTitle);
         Principal principal = request.getUserPrincipal();

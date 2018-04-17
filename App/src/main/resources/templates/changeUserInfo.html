@@ -2,19 +2,16 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: site-head" />
 
-<head>
-    <title>GameWeb</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="../static/css/mystyle.css" th:href="@{/css/mystyle.css}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
+<body class="bg">
 
-<body>
+<header th:replace="layoutLogged :: site-header" />
 
-<!--<p th:text="${p}">Welcome to our grocery store!</p>-->
+
+
+<div class="panel panel-info">
+    <div class="panel-body">
 <span sec:authentication="username"></span>
 <div class="col-sm-2 col-md-2">
     <img  th:src="${img}"
@@ -22,24 +19,28 @@
           class="img-rounded img-responsive" />
 </div>
 <div class="col-sm-4 col-md-4">
-
+    <blockquote>
         <p th:text="${username}" >Bruce Wayne</p>
 
-    <form class="form-signin" th:action="@{/settings}" th:object="${user}" method="post">
+    <form  enctype="multipart/form-data" th:action="@{/settings}" th:object="${user}" method="post">
+        <small> O tobie:</small>
     <input type="text" name="about" th:value="${about}" th:field="*{about}"   class="form-control"/>
-        <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Zaktualizuj </button>
+        <small> Email: </small>
+    <input type="email" name="email" th:value="${email}" th:field="*{email}" class="form-control"/>
+    <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Zaktualizuj </button>
     </form>
 
-
+<h2> Zmień avatar</h2>
     <form th:action="@{/uploadAvatar}" method="POST" enctype="multipart/form-data" action="/uploadFile">
         <table>
             <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
             <tr><td></td><td><input type="submit"  value="Upload" /></td></tr>
         </table>
     </form>
-
+    </blockquote>
+</div></div>
 </div>
-<a href="#" th:href="@{/logout}">Log Out</a>
+<!--<a href="#" th:href="@{/logout}">Log Out</a>-->
 
 </body>
 

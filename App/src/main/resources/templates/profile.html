@@ -14,14 +14,21 @@
             <!--src="https://thumb9.shutterstock.com/display_pic_with_logo/3891164/619490732/stock-vector-unknown-user-icon-in-trendy-flat-style-isolated-on-transparent-background-user-silhouette-symbol-619490732.jpg"-->
 
 </div>
+<div class="panel panel-info">
+    <div class="panel-body">
 <div class="col-sm-4 col-md-4">
+    <a href="#" class="pull-right" th:href="@{/settings}">Edytuj</a>
     <blockquote>
-       <font color="white"><p  th:text="${username}" >Bruce Wayne</p></font>
-        <small><font color="white"><cite title="Source Title" th:text="${about}">Gotham, United Kingdom  <i class="glyphicon glyphicon-map-marker"></i></cite></font> </small>
-    </blockquote>
-    <font color="white"><p th:text="${email}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p></font>
-</div>
+       <!--<font color="white"><p  th:text="${username}" >Bruce Wayne</p></font>-->
 
+        <h3  th:text="${username}" >Bruce Wayne</h3>
+        <small><cite title="Source Title" th:text="${about}">Gotham, United Kingdom  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
+        <!--&lt;!&ndash;<font color="white">&ndash;&gt;</font>-->
+    </blockquote>
+    <!--<font color="white"><p th:text="${email}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p></font>-->
+    <p th:text="${email}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
+</div>
+    </div></div>
 <header th:replace="layout :: footer" />
 </body>
 

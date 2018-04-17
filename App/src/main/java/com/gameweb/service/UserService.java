@@ -63,6 +63,10 @@ public class UserService {
         userDAO.updateAbout(user);
     }
 
+    public void updateUserInfo(User user){
+        userDAO.updateUserInfo(user);
+    }
+
     public void updateAvatar(User user){
         userDAO.updateAvatar(user);
     }

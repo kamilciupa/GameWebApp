@@ -100,4 +100,9 @@ public class UserDAO {
                         }
                 );
     }
+
+    public void updateUserInfo(User user) {
+        jdbcTemplate.update(queries.U_USER_INFO, user.getAbout(), user.getEmail(), user.getUsername());
+
+    }
 }

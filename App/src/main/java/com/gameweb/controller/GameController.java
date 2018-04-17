@@ -41,6 +41,8 @@ public class GameController {
     @RequestMapping(value = "/games/addGame", method = RequestMethod.GET)
     public ModelAndView addGameShow(HttpServletRequest request){
         getUsernameForModel(request);
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
         modelAndView.addObject("game", new Game());
         modelAndView.setViewName("/addGame");
         return modelAndView;
@@ -93,10 +95,8 @@ public class GameController {
     public ModelAndView getAllGames(HttpServletRequest request){
         getUsernameForModel(request);
         List<Game> games = gameService.getGamesTitles();
-
-        Game g = new Game();
-        modelAndView.addObject("searchs",g);
-
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
         modelAndView.addObject("games", games);
         modelAndView.setViewName("/listGame");
         return modelAndView;
@@ -105,6 +105,8 @@ public class GameController {
     @RequestMapping(value = "/games/top", method = RequestMethod.GET)
     public ModelAndView getAllGamesToplist(HttpServletRequest request){
         getUsernameForModel(request);
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
         List<Game> games = gameService.getGamesOrderedTop();
         List<String> gTitles = new ArrayList<>();
         for(Game g : games){
@@ -118,7 +120,8 @@ public class GameController {
 
     @RequestMapping(value = "games/profile/{gameTitle}", method = RequestMethod.GET)
     public ModelAndView getProfileGame(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
-
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
         modelAndView.clear();
         getUsernameForModel(request);
         Game game = gameService.getGameByTitle(gameTitle);
@@ -195,6 +198,8 @@ public class GameController {
     public ModelAndView getAddReview(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
         getUsernameForModel(request);
         Game game = gameService.getGameByTitle(gameTitle);
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
         modelAndView.addObject("review", new Review());
         modelAndView.addObject("gameTitle", gameTitle);
         modelAndView.addObject("title", game.getTitle());
@@ -206,6 +211,8 @@ public class GameController {
     @RequestMapping(value = "/games/profile/{gameTitle}/addReview", method = RequestMethod.POST)
     public ModelAndView addReviewPost(@Valid Review review,@PathVariable("gameTitle") String gameTitle, BindingResult bindingResult, HttpServletRequest request) throws IOException {
 
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
         Principal principal = request.getUserPrincipal();
         User user = userService.getUserByName( principal.getName());
         Game game =  gameService.getGameByTitle(gameTitle);
@@ -233,7 +240,10 @@ public class GameController {
     @RequestMapping(value = "/reviews/{id}", method = RequestMethod.GET)
     public ModelAndView getWholeReview(@PathVariable("id") Integer reviewId, HttpServletRequest request){
         getUsernameForModel(request);
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
         Review review = reviewService.getReviewById(reviewId);
+
         modelAndView.addObject("content", review.getContent());
         modelAndView.addObject("title" , review.getReviewTitle());
         modelAndView.addObject("author", review.getAuthorName());
@@ -279,11 +289,9 @@ public class GameController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/search", method = RequestMethod.POST)
-    public ModelAndView search(){
-        Game g = new Game();
-        modelAndView.addObject("searchs",g);
-        System.out.println("bleble --" + g.getTitle());
+    @RequestMapping(value = "/search")
+    public ModelAndView search(@Valid Game g){
+        modelAndView.addObject("searchS",g);
         modelAndView.clear();
         modelAndView.setViewName("redirect:/games/search/"+g.getTitle());
         return modelAndView;
@@ -294,7 +302,7 @@ public class GameController {
         modelAndView.clear();
         getUsernameForModel(request);
         Game gg = new Game();
-        modelAndView.addObject("searchs",gg);
+        modelAndView.addObject("searchS",gg);
         List<Game> listGame = gameService.getSearchedGames(searchString);
 
 

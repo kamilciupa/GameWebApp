@@ -1,5 +1,6 @@
 package com.gameweb.controller;
 
+import com.gameweb.model.Game;
 import com.gameweb.model.User;
 import com.gameweb.service.UserService;
 
@@ -43,6 +44,8 @@ public class UserController {
     public ModelAndView getMainLogged(HttpServletRequest request){
         Principal principal = request.getUserPrincipal();
         User user = userService.getUserByName( principal.getName());
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
         modelAndView.addObject("username",user.getUsername());
         modelAndView.setViewName("/mainLogged");
         return modelAndView;
@@ -163,7 +166,8 @@ public class UserController {
     @RequestMapping(value = "/profile/{username}", method = RequestMethod.GET)
     public ModelAndView getProfile(@PathVariable("username") String username){
         User user = userService.getUserByName(username);
-
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
         String s = "";
         byte[] bytes;
         try {

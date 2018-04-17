@@ -18,7 +18,7 @@
                 <li><a href="#" th:href="@{/games/top}">Top Lista</a></li>
             </ul>
 
-            <form class="navbar-form navbar-right" action="#" th:action="@{/search}" th:object="${searchs}"  method="post">
+            <form class="navbar-form navbar-right" action="#" th:action="@{/search}" th:object="${searchS}"  method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search" th:field="*{title}"/>
                 </div>

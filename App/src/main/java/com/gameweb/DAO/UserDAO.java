@@ -1,5 +1,6 @@
 package com.gameweb.DAO;
 
+import com.gameweb.model.Game;
 import com.gameweb.model.User;
 import com.gameweb.utils.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,12 @@ public class UserDAO {
                     user.setAvatar(resultSet.getBytes(5));
                     return user;
                 }
-            }, username);   return users; } catch (Exception e) {
+            }, username);
+//           users.setUserGames(getUserGames(users));
+
+           return users;
+
+        } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Nie można pobrać użytkowników ");
         }
@@ -104,5 +110,20 @@ public class UserDAO {
     public void updateUserInfo(User user) {
         jdbcTemplate.update(queries.U_USER_INFO, user.getAbout(), user.getEmail(), user.getUsername());
 
+    }
+
+    public ArrayList<Game> getUserGames(User user) {
+
+        ArrayList<Game> games = new ArrayList<Game>();
+        jdbcTemplate.query(queries.S_GAMES_USER, new RowMapper<Game>() {
+            @Override
+            public Game mapRow(ResultSet resultSet, int i) throws SQLException {
+                Game s = new Game();
+                s.setTitle(resultSet.getString("title"));
+                games.add(s);
+                return s;
+            }
+        },user.getUsername());
+        return games;
     }
 }

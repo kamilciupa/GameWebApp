@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: site-head" />
+
+<body class="bg">
+
+<header th:replace="layoutLogged :: site-header" />
+
+
+
+
+<div class="panel panel-info">
+    <div class="panel-body">
+        <span sec:authentication="username"></span>
+        <div class="col-sm-2 col-md-2">
+            <img  th:src="${img}"
+                  alt="sosss"
+                  class="img-rounded img-responsive" />
+        </div>
+        <div class="col-sm-4 col-md-4">
+            <p class="pull-right"><a href="#" th:href="@{/games/profile/{gameTitle}/(gameTitle=${gameTitle})}"> Powrót </a></p>
+            <blockquote>
+                <p th:text="'Edytuj ' + ${gameTitle}" >Bruce Wayne</p>
+
+                <form  enctype="multipart/form-data"  th:object="${game}" method="post">
+                    <small> Opis gry:</small>
+                    <textarea style="resize: vertical" type="text" name="email" th:value="${about}" th:field="*{about}" class="form-control"/>
+                    <small> Developer</small>
+                    <input type="text" name="developer" th:value="${developer}" th:field="*{developer}" class="form-control"/>
+
+                    <!--<textarea style="resize: vertical" type="text" name="about" th:value="${about}" th:field="*{about}"   class="form-control"/>-->
+                    <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Zaktualizuj </button>
+                </form>
+
+                <h2> Zmień avatar</h2>
+                <form th:action="@{/uploadCover/{gameTitle}/(gameTitle=${gameTitle})}" method="POST" enctype="multipart/form-data" action="/uploadFile">
+                    <table>
+                        <tr><td>File to upload:</td><td><input type="file" name="file" /></td></tr>
+                        <tr><td></td><td><input type="submit"  value="Upload" /></td></tr>
+                    </table>
+                </form>
+            </blockquote>
+        </div></div>
+</div>
+
+</body>
+
+</html>

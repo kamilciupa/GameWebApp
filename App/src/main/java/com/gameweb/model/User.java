@@ -7,8 +7,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.List;
 
 /**
  * Created by Kamil on 2017-11-29.
@@ -26,6 +28,9 @@ public class User {
     private String password;
     private byte[] avatar; // niewymagany
     private String about; // niewymagany
+
+    private ArrayList<Game> userGames;
+
 
     //private CommonsMultipartFile file;
 
@@ -87,7 +92,15 @@ public class User {
         this.about = about;
     }
 
-//    public CommonsMultipartFile getFile() {
+    public ArrayList<Game> getUserGames() {
+        return userGames;
+    }
+
+    public void setUserGames(ArrayList<Game> userGames) {
+        this.userGames = userGames;
+    }
+
+    //    public CommonsMultipartFile getFile() {
 //        return file;
 //    }
 //

@@ -38,7 +38,7 @@ public class Queries
     static public final String U_USER_AVATAR = "UPDATE users set avatar = ? where username = ?";
 
     static public final String U_GAME_ABOUT = "UPDATE games set about = ? where id = ?";
-    static public final String U_GAME_COVER = "UPDATE games set cover = ? where id = ?";
+    static public final String U_GAME_COVER = "UPDATE games set cover = ? where id = (select id from games where title = ?)";
 
     public static final String S_REVIEW_BY_ID = "SELECT * FROM reviews WHERE id = ?";
     public static final String S_GET_GAMES_TITLES = "SELECT title FROM games";
@@ -49,4 +49,5 @@ public class Queries
     public static final String S_GET_COMMS = "SELECT c.*, u.username,u.avatar  FROM commments c, users u WHERE c.type = 'G' and c.key_value = (SELECT id FROM games WHERE title = ?) and c.author = u.id";
     public static final String S_GET_CHILD_COMMS = "SELECT * FROM comments WHERE parent = ?";
     public static final String U_USER_INFO = "UPDATE users set about = ?  , email = ? where username = ?";
+    public static final String S_GAMES_USER = "select title from games where masterid = (select id from users where username = ?) ;";
 }

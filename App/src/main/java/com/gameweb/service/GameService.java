@@ -50,6 +50,10 @@ public class GameService {
             return false;
     }
 
+    public void updateCover(Game game){
+        gameDAO.updateCover(game);
+    }
+
     public void addVoteMapping(Integer vote, Integer user_id, String gameTitle){
         gameDAO.addVoteMapping(vote,user_id,gameTitle);
     }

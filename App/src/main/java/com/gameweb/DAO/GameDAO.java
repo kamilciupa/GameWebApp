@@ -140,4 +140,7 @@ public class GameDAO {
         e.setReleaseDate(resultSet.getDate("release_date"));
     }
 
+    public void updateCover(Game game) {
+            jdbcTemplate.update(queries.U_GAME_COVER, game.getCover(), game.getTitle());
+    }
 }

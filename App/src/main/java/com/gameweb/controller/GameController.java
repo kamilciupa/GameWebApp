@@ -128,6 +128,18 @@ public class GameController {
         Game game = gameService.getGameByTitle(gameTitle);
         Principal principal = request.getUserPrincipal();
         User user = userService.getUserByName( principal.getName());
+        user.setUserGames(userService.getUserGames(user));
+
+        List<String> ggg = new ArrayList<String>();
+        List<String> gg2 = new ArrayList<String>();
+        for(Game a : user.getUserGames()){
+            ggg.add(a.getTitle());
+        }
+        if(ggg.contains(gameTitle)){
+            gg2.add("");
+        }
+
+        modelAndView.addObject("if", gg2);
 
         if(gameService.isVoted(user.getId(), gameTitle))
             modelAndView.addObject("isVoted", "Zagłosowałeś już na tę grę");
@@ -316,5 +328,42 @@ public class GameController {
         modelAndView.setViewName("searchGames");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/games/profile/{gameTitle}/settings")
+    public ModelAndView changeGameInfo(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
+        modelAndView.clear();
+        getUsernameForModel(request);
+        Game gg = new Game();
+        modelAndView.addObject("searchS",gg);
+        modelAndView.addObject("gameTitle", gameTitle);
+        Game game = gameService.getGameByTitle(gameTitle);
+        modelAndView.addObject("game", game);
+        String s = createAvatarString(game);
+        modelAndView.addObject("img", s);
+
+
+
+
+        modelAndView.setViewName("changeGameInfo");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/uploadCover/{gameTitle}", method = RequestMethod.POST)
+    public ModelAndView updateCover(@RequestParam("file") MultipartFile multipartFile,@RequestParam("gameTitle")String gameTitle, HttpServletRequest request){
+        String s = "";
+        try{
+            byte[] bytes = multipartFile.getBytes();
+            Game game = gameService.getGameByTitle(gameTitle);
+            game.setCover(bytes);
+            gameService.updateCover(game);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        modelAndView.setViewName("redirect:/games/search/"+gameTitle);
+        return modelAndView;
+    }
+
+
+
 
 }

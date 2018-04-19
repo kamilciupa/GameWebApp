@@ -19,14 +19,15 @@
           class="img-rounded img-responsive" />
 </div>
 <div class="col-sm-4 col-md-4">
+    <p class="pull-right"><a href="#" th:href="@{/profile/{username}/(username=${username})}"> Powrót </a></p>
     <blockquote>
         <p th:text="${username}" >Bruce Wayne</p>
 
-    <form  enctype="multipart/form-data" th:action="@{/settings}" th:object="${user}" method="post">
-        <small> O tobie:</small>
-    <input type="text" name="about" th:value="${about}" th:field="*{about}"   class="form-control"/>
+        <form  enctype="multipart/form-data" th:action="@{/settings}" th:object="${user}" method="post">
         <small> Email: </small>
     <input type="email" name="email" th:value="${email}" th:field="*{email}" class="form-control"/>
+        <small> O tobie:</small>
+    <textarea style="resize: vertical" type="text" name="about" th:value="${about}" th:field="*{about}"   class="form-control"/>
     <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Zaktualizuj </button>
     </form>
 

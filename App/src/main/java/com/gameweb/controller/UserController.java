@@ -167,6 +167,7 @@ public class UserController {
     public ModelAndView getProfile(@PathVariable("username") String username) {
         modelAndView.clear();
         User user = userService.getUserByName(username);
+        user.setUserGames(userService.getUserGames(user));
         Game gg = new Game();
         modelAndView.addObject("searchS",gg);
         String s = "";
@@ -188,6 +189,7 @@ public class UserController {
         modelAndView.addObject("username", user.getUsername());
         modelAndView.addObject("email", user.getEmail());
         modelAndView.addObject("about", user.getAbout());
+        modelAndView.addObject("games",user.getUserGames());
         modelAndView.setViewName("/profile");
         return modelAndView;
     }

@@ -28,8 +28,23 @@
     <!--<font color="white"><p th:text="${email}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p></font>-->
     <p th:text="${email}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
 </div>
+
     </div></div>
-<header th:replace="layout :: footer" />
+<!--<div class="panel panel-info">-->
+    <!--<div class="panel-body">-->
+        <!--<p> asdasdasdas</p>-->
+<!--<a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p.title})}" ><div th:text="${p.title}"></div></a>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="panel panel-info">
+    <div class="panel-body center-block">
+        <div class="text-center">
+            <h2>Twoje Gry</h2>
+            <a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p.title})}" ><div th:text="${p.title}"></div></a>
+        </div>
+    </div></div>
+<!--<header th:replace="layout :: footer" />-->
 </body>
 
 </html>

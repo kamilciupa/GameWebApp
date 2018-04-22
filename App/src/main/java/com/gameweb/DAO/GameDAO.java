@@ -143,4 +143,26 @@ public class GameDAO {
     public void updateCover(Game game) {
             jdbcTemplate.update(queries.U_GAME_COVER, game.getCover(), game.getTitle());
     }
+
+    public void updateGameInfo(Game game) {
+            jdbcTemplate.update(queries.U_GAME_ABOUT, game.getAbout(), game.getTitle());
+            jdbcTemplate.update(queries.U_GAME_DEVELOPER, game.getDeveloper(), game.getTitle());
+    }
+
+    public int deleteGame(String name, String gameTitle) {
+          int diff =   jdbcTemplate.queryForObject(queries.S_GAME_MASTER, new RowMapper<Integer>() {
+              @Override
+              public Integer mapRow(ResultSet resultSet, int i) throws SQLException {
+                  return resultSet.getInt("diff");
+              }
+          }, gameTitle , name);
+          if(diff == 0){
+              jdbcTemplate.update(queries.D_GAME_VOTES, gameTitle);
+              jdbcTemplate.update(queries.D_GAME_COM, gameTitle);
+              jdbcTemplate.update(queries.D_GAME_REV, gameTitle);
+              jdbcTemplate.update(queries.D_GAME,  gameTitle,name);
+          } else { return  1 ;}
+          return 0;
+
+    }
 }

@@ -24,13 +24,11 @@
             <blockquote>
                 <p th:text="'Edytuj ' + ${gameTitle}" >Bruce Wayne</p>
 
-                <form  enctype="multipart/form-data"  th:object="${game}" method="post">
+                <form th:action= "@{/games/profile/{gameTitle}/settings/(gameTitle=${gameTitle})}" th:object="${game}" method="post">
                     <small> Opis gry:</small>
                     <textarea style="resize: vertical" type="text" name="email" th:value="${about}" th:field="*{about}" class="form-control"/>
                     <small> Developer</small>
                     <input type="text" name="developer" th:value="${developer}" th:field="*{developer}" class="form-control"/>
-
-                    <!--<textarea style="resize: vertical" type="text" name="about" th:value="${about}" th:field="*{about}"   class="form-control"/>-->
                     <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Zaktualizuj </button>
                 </form>
 
@@ -43,6 +41,15 @@
                 </form>
             </blockquote>
         </div></div>
+</div>
+<div class="panel panel-info">
+    <div class="panel-body">
+        <form th:action="@{/games/profile/{gameTitle}/settings/delete/(gameTitle=${gameTitle})}" th:object="${game}" method="post">
+            <div class="text-center">
+            <button type="submit" id="button" class="btn btn-lg btn-danger"> USUN GRĘ</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>

@@ -37,7 +37,8 @@ public class Queries
     static public final String U_USER_ABOUT = "UPDATE users set about = ? where username = ?";
     static public final String U_USER_AVATAR = "UPDATE users set avatar = ? where username = ?";
 
-    static public final String U_GAME_ABOUT = "UPDATE games set about = ? where id = ?";
+    static public final String U_GAME_ABOUT = "UPDATE games set about = ? where id = (select id from games where title = ?)";
+    static public final String U_GAME_DEVELOPER = "UPDATE games set developer = ? where id = (select id from games where title = ?)";
     static public final String U_GAME_COVER = "UPDATE games set cover = ? where id = (select id from games where title = ?)";
 
     public static final String S_REVIEW_BY_ID = "SELECT * FROM reviews WHERE id = ?";
@@ -50,4 +51,11 @@ public class Queries
     public static final String S_GET_CHILD_COMMS = "SELECT * FROM comments WHERE parent = ?";
     public static final String U_USER_INFO = "UPDATE users set about = ?  , email = ? where username = ?";
     public static final String S_GAMES_USER = "select title from games where masterid = (select id from users where username = ?) ;";
+    public static final String S_GAME_MASTER = "select a.masterid - b.id diff from (\n" +
+            "select masterid from games where title = ?) a\n" +
+            ", (select id from users where username = ?) b ; ";
+    public static final String D_GAME_VOTES = "delete from user_vote where game_id = (select id from games where title = ?) ;";
+    public static final String D_GAME_REV = "delete from reviews where key_value = (select id from games where title = ?);";
+    public static final String D_GAME_COM = "delete from commments where key_value = (select id from games where title = ?);";
+    public static final String D_GAME = "DELETE FROM games where title = ? and masterid = (select id from users where username = ?) ";
 }

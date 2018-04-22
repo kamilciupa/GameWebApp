@@ -340,29 +340,56 @@ public class GameController {
         modelAndView.addObject("game", game);
         String s = createAvatarString(game);
         modelAndView.addObject("img", s);
-
-
-
-
         modelAndView.setViewName("changeGameInfo");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/uploadCover/{gameTitle}", method = RequestMethod.POST)
-    public ModelAndView updateCover(@RequestParam("file") MultipartFile multipartFile,@RequestParam("gameTitle")String gameTitle, HttpServletRequest request){
+
+    @RequestMapping(value = "/games/profile/{gameTitle}/settings", method = RequestMethod.POST)
+    public ModelAndView changeGameInfo(@PathVariable("gameTitle") String gameTitle, @Valid Game game) {
+        //todo
+        System.out.println("Wchodzi " + game.getAbout() + "   " + game.getDeveloper());
+        game.setTitle(gameTitle);
+        gameService.updateGameInfo(game);
+        modelAndView.clear();
+        modelAndView.setViewName("redirect:/games/profile/"+gameTitle.replace(" ","%20")+"/settings");
+        return modelAndView;
+    }
+
+        @RequestMapping(value = "/uploadCover/{gameTitle}", method = RequestMethod.POST)
+    public ModelAndView updateCover(@RequestParam("file") MultipartFile multipartFile,@PathVariable("gameTitle")String gameTitle){
         String s = "";
         try{
+
             byte[] bytes = multipartFile.getBytes();
             Game game = gameService.getGameByTitle(gameTitle);
             game.setCover(bytes);
             gameService.updateCover(game);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        modelAndView.setViewName("redirect:/games/search/"+gameTitle);
+        modelAndView.clear();
+        modelAndView.setViewName("redirect:/games/profile/"+gameTitle.replace(" ","%20")+"/settings");
         return modelAndView;
     }
 
+    @RequestMapping(value = "/games/profile/{gameTitle}/settings/delete", method = RequestMethod.POST)
+    public ModelAndView deleteGame(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request){
+      Principal principal =  request.getUserPrincipal();
+      System.out.println(principal.getName());
+
+     int  s =   gameService.deleteGame(principal.getName(), gameTitle);
+        modelAndView.clear();
+    if(s == 1){
+
+        modelAndView.setViewName("redirect:/games/profile/"+gameTitle.replace(" ","%20")+"/settings");
+    } else {
+        modelAndView.setViewName("redirect:/games/all");
+    }
+
+    return modelAndView;
+    }
 
 
 

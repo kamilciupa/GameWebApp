@@ -64,4 +64,14 @@ public class GameService {
         searchString = "%"+searchString+"%";
         return gameDAO.getSearchedGames(searchString);
     }
+
+    public void updateGameInfo(Game game) {
+        // todo
+        System.out.println("SERWIS " + game.getTitle());
+        gameDAO.updateGameInfo(game);
+    }
+
+    public int deleteGame(String name, String gameTitle) {
+        return gameDAO.deleteGame(name, gameTitle);
+    }
 }

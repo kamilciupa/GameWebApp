@@ -15,8 +15,8 @@
                     <h2 class="form-signin-heading"><span class="glyphicon glyphicon-lock"></span>Zaloguj się </h2>
                     <p class="form-signin-desc"> Skorzystaj z pełnych możliwości naszej strony </p>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nazwa użytkownika" name="username" th:placeholder="username" required="true"/>
-                        <input type="password" class="form-control" placeholder="Hasło"  name="password" id="password"  th:placeholder="Password"  onkeyup='check();' required="true"/>
+                        <input type="text" class="form-control" placeholder="Nazwa użytkownika" name="username" th:placeholder="Nick" required="true"/>
+                        <input type="password" class="form-control" placeholder="Hasło"  name="password" id="password"  th:placeholder="Hasło"  onkeyup='check();' required="true"/>
                         <button type="submit" class="btn btn-lg btn-danger btn-block" id="butt" > Zaloguj </button>
                         <div  class="alert alert-danger" align="center" th:if="${param.error}">
                             <p style="font-size: 20; color: #FF1C19;"><span class="glyphicon glyphicon-remove"></span> Nieprawidłowa nazwa użytkownika lub hasło!</p>

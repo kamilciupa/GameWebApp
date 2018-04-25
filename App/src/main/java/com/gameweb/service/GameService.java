@@ -66,8 +66,6 @@ public class GameService {
     }
 
     public void updateGameInfo(Game game) {
-        // todo
-        System.out.println("SERWIS " + game.getTitle());
         gameDAO.updateGameInfo(game);
     }
 

@@ -123,6 +123,10 @@ public class UserController {
   public ModelAndView getProfile(@PathVariable("username") String username) {
     modelAndView.clear();
     User user = userService.getUserByName(username);
+    if(user.getId() == -1){
+      modelAndView.setViewName("redirect:/index");
+      return modelAndView;
+    }
     user.setUserGames(userService.getUserGames(user));
     setupSearchForm(modelAndView);
     String s = "";
@@ -155,7 +159,7 @@ public class UserController {
       byte[] bytes = user.getAvatar();
       org.apache.commons.codec.binary.Base64 encoder = new org.apache.commons.codec.binary.Base64();
       s = encoder.encodeToString(bytes);
-      System.out.println(s);
+
     } catch (Exception e) {
       handleError(modelAndView, e, "/settings");
       return modelAndView;
@@ -206,9 +210,17 @@ public class UserController {
   }
 
   @RequestMapping(value = "/errorPage", method = RequestMethod.GET)
-  public ModelAndView showErrorPage() {
+  public ModelAndView showErrorPage(HttpServletRequest request) {
+    getUsernameForModel(request);
     setupSearchForm(modelAndView);
     modelAndView.setViewName("errorPage");
     return modelAndView;
+  }
+
+
+  private void getUsernameForModel(HttpServletRequest request) {
+    Principal principal = request.getUserPrincipal();
+    User user = userService.getUserByName(principal.getName());
+    modelAndView.addObject("username", user.getUsername());
   }
 }

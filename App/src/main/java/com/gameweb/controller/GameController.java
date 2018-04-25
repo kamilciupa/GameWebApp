@@ -94,7 +94,6 @@ public class GameController {
 
     if (!hasErrors) {
       game.setCover(file.getBytes());
-      System.out.println(file.getName());
       gameService.addGame(game, user.getId());
       modelAndView.setViewName("/profile");
       modelAndView.clear();
@@ -139,6 +138,11 @@ public class GameController {
     setupSearchBar(modelAndView);
     getUsernameForModel(request);
     Game game = gameService.getGameByTitle(gameTitle);
+    if(game.getId() == -1){
+      modelAndView.clear();
+      modelAndView.setViewName("redirect:/errorPage");
+      return modelAndView;
+    }
     Principal principal = request.getUserPrincipal();
     User user = userService.getUserByName(principal.getName());
     user.setUserGames(userService.getUserGames(user));
@@ -346,7 +350,6 @@ public class GameController {
   public ModelAndView changeGameInfo(
       @PathVariable("gameTitle") String gameTitle, @Valid Game game) {
     // todo
-    System.out.println("Wchodzi " + game.getAbout() + "   " + game.getDeveloper());
     game.setTitle(gameTitle);
     gameService.updateGameInfo(game);
     modelAndView.clear();

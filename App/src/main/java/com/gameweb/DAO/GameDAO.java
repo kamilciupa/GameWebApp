@@ -33,7 +33,6 @@ public class GameDAO {
           userID);
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("Błąd w DAO");
     }
   }
 
@@ -53,25 +52,33 @@ public class GameDAO {
   }
 
   public Game getUserByTitle(String title) {
-    return jdbcTemplate.queryForObject(
-        queries.S_GAME_BY_TITLE,
-        new RowMapper<Game>() {
-          @Override
-          public Game mapRow(ResultSet resultSet, int i) throws SQLException {
-            Game game = new Game();
-            game.setId(resultSet.getInt("id"));
-            game.setTitle(resultSet.getString("title"));
-            game.setAbout(resultSet.getString("about"));
-            game.setDeveloper(resultSet.getString("developer"));
-            game.setReleaseDate(resultSet.getDate("release_date"));
-            game.setCover(resultSet.getBytes("cover"));
-            game.setRating(resultSet.getDouble("rating"));
-            game.setVotesSum(resultSet.getInt("votes_sum"));
-            game.setVotesAmount(resultSet.getInt("votes_amount"));
-            return game;
-          }
-        },
-        title);
+    try{
+      Game game = jdbcTemplate.queryForObject(
+              queries.S_GAME_BY_TITLE,
+              new RowMapper<Game>() {
+                @Override
+                public Game mapRow(ResultSet resultSet, int i) throws SQLException {
+                  Game game = new Game();
+                  game.setId(resultSet.getInt("id"));
+                  game.setTitle(resultSet.getString("title"));
+                  game.setAbout(resultSet.getString("about"));
+                  game.setDeveloper(resultSet.getString("developer"));
+                  game.setReleaseDate(resultSet.getDate("release_date"));
+                  game.setCover(resultSet.getBytes("cover"));
+                  game.setRating(resultSet.getDouble("rating"));
+                  game.setVotesSum(resultSet.getInt("votes_sum"));
+                  game.setVotesAmount(resultSet.getInt("votes_amount"));
+                  return game;
+                }
+              },
+              title);
+    return game;
+    }
+    catch (Exception e){
+      Game g = new Game();
+      g.setId(-1);
+      return  g;
+    }
   }
 
   public void updateGameRating(Integer votesAmount, Integer votesSum, Double rating, String title) {
@@ -99,8 +106,6 @@ public class GameDAO {
               new RowMapper<Integer>() {
                 @Override
                 public Integer mapRow(ResultSet rs, int rownumber) throws SQLException {
-                  // TODO Usunąc println
-                  System.out.println("To mamy z DAO" + rs.getInt("vote"));
                   return rs.getInt("vote");
                 }
               },

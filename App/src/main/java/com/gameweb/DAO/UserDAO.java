@@ -29,7 +29,6 @@ public class UserDAO {
       jdbcTemplate.update(queries.I_USER_ROLE, user.getUsername(), "ROLE_ADMIN");
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("Błąd w DAO");
     }
   }
 
@@ -86,8 +85,10 @@ public class UserDAO {
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("Nie można pobrać użytkowników ");
+      User u = new User();
+      u.setId(-1);
+      return u;
     }
-    return new User();
   }
 
   public void updateAbout(User user) {

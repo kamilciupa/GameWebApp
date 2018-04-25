@@ -26,7 +26,6 @@ public class ReviewDAO {
             jdbcTemplate.update(queries.I_REVIEW,review.getReviewTitle(), review.getContent(), review.getKey_value(), review.getParentId());
         } catch (Exception e){
             e.printStackTrace();
-            System.out.println("BLAD");
         }
     }
 

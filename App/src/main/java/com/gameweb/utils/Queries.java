@@ -26,7 +26,8 @@ public class Queries
 
     static public final String I_USER = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
     static public final String I_USER_W_AVATAR = "INSERT INTO users (username, email, password,avatar) VALUES (?,?,?,?)";
-    static public final String I_GAME = "INSERT INTO games (title,about, developer, release_date,cover,  masterid) VALUES (?,?,?,?,?,?)";
+//    static public final String I_GAME = "INSERT INTO games (title,about, developer, release_date,cover,  masterid) VALUES (?,?,?,?,?,?)";
+    static public final String I_GAME = "INSERT INTO games (title,about, developer, cover,  masterid) VALUES (?,?,?,?,?)";
     static public final String I_REVIEW = "INSERT INTO reviews (title, content, key_value, author) VALUES (?,?,?,?)";
     static public final String I_USER_ROLE = "INSERT INTO user_roles (username, role) VALUES (?,?)";
     static public final String I_CATEGORY_GAME = "INSERT INTO categories_games (cat_id, game_id) values (?,?)";

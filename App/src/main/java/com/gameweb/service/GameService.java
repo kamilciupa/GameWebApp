@@ -74,4 +74,15 @@ public class GameService {
     public int deleteGame(String name, String gameTitle) {
         return gameDAO.deleteGame(name, gameTitle);
     }
+
+
+    public boolean isGameTitleFree(String title) {
+        List<Game> tmp = gameDAO.getGamesTitles();
+        for(Game t : tmp){
+            if(t.getTitle().equals(title)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

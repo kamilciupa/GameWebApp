@@ -23,13 +23,12 @@ public class CommentDAO {
   Queries queries = new Queries();
   String className = "CommentDAO";
 
-    private void printMyException(String className, String methodName, Exception e) {
-        System.out.println(
-                MessageFormat.format(
-                        "1) {0}\n2) {1}\n3) {2}\n4) {3}",
-                        className, methodName, e.getMessage(), e.getClass().getCanonicalName()));
-    }
-
+  private void printMyException(String className, String methodName, Exception e) {
+    System.out.println(
+        MessageFormat.format(
+            "1) {0}\n2) {1}\n3) {2}\n4) {3}",
+            className, methodName, e.getMessage(), e.getClass().getCanonicalName()));
+  }
 
   public void addComment(Comment comment) {
     try {
@@ -44,7 +43,6 @@ public class CommentDAO {
       printMyException(className, "addComment", e);
     }
   }
-
 
   public List<Comment> getCommentsForGame(String gameTitle) {
     List<Comment> a =
@@ -102,7 +100,7 @@ public class CommentDAO {
       org.apache.commons.codec.binary.Base64 encoder = new org.apache.commons.codec.binary.Base64();
       s = encoder.encodeToString(bytes);
     } catch (Exception e) {
-        printMyException(className, "getAvatarString", e);
+      printMyException(className, "getAvatarString", e);
     }
     return s;
   }

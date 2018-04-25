@@ -50,8 +50,9 @@
         <a href="#" th:href="@{/games/profile/{gameTitle}/addReview/(gameTitle=${title})}"><small class="text-muted">Dodaj recenzję</small></a>
         </h3>
         </div>
+        <div th:if="${not #lists.isEmpty(reviews)}">
             <div class="row">
-                <p th:each="revs:${reviews}">
+                <p  th:each="revs:${reviews}">
                 <div class="col-md-4">
             <blockquote>
                 <a href="#" th:href="@{/reviews/{id}/(id=${revs.id})}">  <p th:text="${revs.reviewTitle}" >Bruce Wayne</p></a>
@@ -61,7 +62,7 @@
             </p>
 
             </div>
-
+    </div>
 
 
     </div>

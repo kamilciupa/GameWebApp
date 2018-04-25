@@ -87,6 +87,11 @@ public class GameController {
 
     //        TODO walidacje
 
+    if (!gameService.isGameTitleFree(game.getTitle())) {
+      modelAndView.addObject("p", "B L A D ");
+      hasErrors = false;
+    }
+
     if (!hasErrors) {
       game.setCover(file.getBytes());
       System.out.println(file.getName());
@@ -120,7 +125,7 @@ public class GameController {
     for (Game g : games) {
       gTitles.add(g.getTitle());
     }
-    Collections.reverse(gTitles);
+//    Collections.reverse(gTitles);
     modelAndView.addObject("games", gTitles);
     modelAndView.setViewName("/toplist");
     return modelAndView;
@@ -178,8 +183,6 @@ public class GameController {
     List<Review> revs = new ArrayList<Review>();
     if (reviews.size() > 3) {
       revs = reviews.subList(0, 3);
-    } else if (reviews.size() <= 0) {
-      revs.add(new Review(0, "BRAK RECENZJI", "BRAK RECENZJI"));
     } else {
       revs = reviews;
     }
@@ -374,12 +377,14 @@ public class GameController {
   }
 
   @RequestMapping(value = "/games/profile/{gameTitle}/settings/delete", method = RequestMethod.POST)
-  public ModelAndView deleteGame(@PathVariable("gameTitle") String gameTitle, HttpServletRequest request) {
+  public ModelAndView deleteGame(
+      @PathVariable("gameTitle") String gameTitle, HttpServletRequest request) {
     Principal principal = request.getUserPrincipal();
     int s = gameService.deleteGame(principal.getName(), gameTitle);
     modelAndView.clear();
     if (s == 1) {
-      modelAndView.setViewName("redirect:/games/profile/" + gameTitle.replace(" ", "%20") + "/settings");
+      modelAndView.setViewName(
+          "redirect:/games/profile/" + gameTitle.replace(" ", "%20") + "/settings");
     } else {
       modelAndView.setViewName("redirect:/games/all");
     }

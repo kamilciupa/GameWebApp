@@ -162,7 +162,7 @@ public class GameController {
     Game game = gameService.getGameByTitle(gameTitle);
     if(game.getId() == -1){
       modelAndView.clear();
-      modelAndView.setViewName("redirect:/errorPage");
+      modelAndView.setViewName("redirect:/error");
       return modelAndView;
     }
     Principal principal = request.getUserPrincipal();

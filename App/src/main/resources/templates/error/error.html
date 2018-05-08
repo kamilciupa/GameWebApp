@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head th:replace="layout :: site-head" />
+
+<body class="bg">
+
+<header th:replace="layoutLogged :: site-header" />
+
+<div class="panel panel-info">
+    <div class="panel-body">
+        <div class="text-center">
+            <h1>¯\_(ツ)_/¯</h1>
+            <h2>Przepraszamy, wystąpił nieprzewidziany bład.</h2>
+        </div>
+    </div>
+</div>
+<header th:replace="layout :: footer" />
+
+</body>
+</html>

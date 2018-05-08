@@ -32,7 +32,7 @@ public class UserController {
 
   private static void handleError(ModelAndView modelAndView, Exception e, String endpoint) {
     modelAndView.clear();
-    modelAndView.setViewName("redirect:/errorPage");
+    modelAndView.setViewName("redirect:/error");
     System.out.println(endpoint + " ERROR:) " + e.getMessage());
   }
 
@@ -209,11 +209,11 @@ public class UserController {
     return modelAndView;
   }
 
-  @RequestMapping(value = "/errorPage", method = RequestMethod.GET)
+  @RequestMapping(value = "/error", method = RequestMethod.GET)
   public ModelAndView showErrorPage(HttpServletRequest request) {
     getUsernameForModel(request);
     setupSearchForm(modelAndView);
-    modelAndView.setViewName("errorPage");
+    modelAndView.setViewName("error");
     return modelAndView;
   }
 

@@ -18,6 +18,10 @@
             <h2>Gry na portalu</h2>
             <a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p.title})}" ><div th:text="${p.title}"></div></a>
         </div>
+            <div>
+                <a href = "#" th:href="@{/games/all/{pageid}/(pageid=${prev_pageid})}"> <span class="glyphicon glyphicon-chevron-left"></span></a>
+                <a href = "#" th:href="@{/games/all/{pageid}/(pageid=${next_pageid})}"> <span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
         </div></div>
 
 

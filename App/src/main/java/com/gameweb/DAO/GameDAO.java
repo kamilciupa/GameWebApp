@@ -194,4 +194,21 @@ public class GameDAO {
     }
     return 0;
   }
+
+  public List<Game> getGameByPage(int pageid,int total){
+    String sql="select * from games order by title limit 10 offset "+ (pageid-1)*10;
+    return jdbcTemplate.query(sql,new RowMapper<Game>(){
+      public Game mapRow(ResultSet rs, int row) throws SQLException {
+        Game e = new Game();
+        fillGameData(rs,e);
+        return e;
+      }
+    });
+  }
+
+  public int getGamesAmount(){
+    return jdbcTemplate.queryForObject(Queries.SELECT_COUNT_1_FROM_GAMES, new Object[] {}, Integer.class);
+  }
 }
+
+

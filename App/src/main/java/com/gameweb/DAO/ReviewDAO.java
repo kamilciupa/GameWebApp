@@ -37,17 +37,21 @@ public class ReviewDAO {
               @Override
               public Review mapRow(ResultSet resultSet, int i) throws SQLException {
                 Review e = new Review();
-                e.setReviewTitle(resultSet.getString("title"));
-                e.setContent(resultSet.getString("content"));
-                e.setParentId(resultSet.getInt("author"));
-                e.setKey_value(resultSet.getInt("key_value"));
-                e.setId(resultSet.getInt("id"));
+                  fillReviewData(resultSet, e);
                 return e;
               }
             },
             gameTitle);
     return a;
   }
+
+    private void fillReviewData(ResultSet resultSet, Review e) throws SQLException {
+        e.setReviewTitle(resultSet.getString("title"));
+        e.setContent(resultSet.getString("content"));
+        e.setParentId(resultSet.getInt("author"));
+        e.setKey_value(resultSet.getInt("key_value"));
+        e.setId(resultSet.getInt("id"));
+    }
 
     public Review getReviewById(Integer id) {
         Review review = new Review();
@@ -75,6 +79,24 @@ public class ReviewDAO {
 
 
         return  review;
+    }
+
+
+    public int getAmountPerGame(String game) {
+        return jdbcTemplate.queryForObject(Queries.S_AMOUN_REVS_PER_GAME, new Object[] { game }, Integer.class);
+
+    }
+
+    public List<Review> getReviewsPerGamePerPage(String gameTitle, int pageid) {
+        String sql="select * from reviews where key_value in (select id from games where title = ? ) order by title limit 10 offset "+ (pageid-1)*10;
+
+        return jdbcTemplate.query(sql,new RowMapper<Review>(){
+            public Review mapRow(ResultSet rs, int row) throws SQLException {
+                Review e = new Review();
+                fillReviewData(rs, e);
+                return e;
+            }
+        },gameTitle);
     }
 
 

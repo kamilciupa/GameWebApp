@@ -26,4 +26,13 @@ public class ReviewService {
     }
 
     public List<Review> getReviewsPerGame(String gameTitle) { return  reviewDAO.getReviewsPerGame(gameTitle);}
+
+    public int getReviewsAmountPerGame(String game) {
+        return reviewDAO.getAmountPerGame(game);
+    }
+
+    public List<Review> getReviewsByPagePerGame(String gameTitle, int pageid) {
+        return reviewDAO.getReviewsPerGamePerPage(gameTitle, pageid);
+
+    }
 }

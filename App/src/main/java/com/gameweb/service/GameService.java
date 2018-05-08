@@ -83,4 +83,13 @@ public class GameService {
         }
         return true;
     }
+
+    public int getGamesAmount() {
+        return gameDAO.getGamesAmount();
+    }
+
+    public List<Game> getGamesByPage(int pageid) {
+        int total = getGamesAmount();
+        return gameDAO.getGameByPage(pageid, total);
+    }
 }

@@ -21,6 +21,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 public class GameController {
@@ -105,14 +106,35 @@ public class GameController {
     return modelAndView;
   }
 
-  @RequestMapping(value = "/games/all", method = RequestMethod.GET)
-  public ModelAndView getAllGames(HttpServletRequest request) {
+//  @RequestMapping(value = "/games/all", method = RequestMethod.GET)
+//  public ModelAndView getAllGames(HttpServletRequest request) {
+//    getUsernameForModel(request);
+//    List<Game> games = gameService.getGamesTitles();
+//    setupSearchBar(modelAndView);
+////    List<Game> gam = games.stream().sorted().collect(Collectors.toList());
+//    modelAndView.addObject("games", games);
+//    modelAndView.setViewName("/listGame");
+//    return modelAndView;
+//  }
+
+  @RequestMapping(value="/games/all/{pageid}")
+  public ModelAndView edit(@PathVariable int pageid, HttpServletRequest request) {
+    int total=gameService.getGamesAmount();
+    total = (total / 10) +  1;
+    modelAndView.clear();
     getUsernameForModel(request);
-    List<Game> games = gameService.getGamesTitles();
     setupSearchBar(modelAndView);
+
+    List<Game> games = gameService.getGamesByPage(pageid);
+
+
+    modelAndView.addObject("prev_pageid", (pageid == 1 ? 1 : pageid-1 ));
+    modelAndView.addObject("next_pageid",(pageid == total ? total : pageid+1));
+
     modelAndView.addObject("games", games);
-    modelAndView.setViewName("/listGame");
+    modelAndView.setViewName("listGame");
     return modelAndView;
+//    return new ModelAndView("listGame","games",games);
   }
 
   @RequestMapping(value = "/games/top", method = RequestMethod.GET)
@@ -259,6 +281,29 @@ public class GameController {
     return modelAndView;
   }
 
+  @RequestMapping(value="games/profile/{gameTitle}/reviews/{pageid}")
+  public ModelAndView getReviews(@PathVariable("gameTitle") String gameTitle,@PathVariable("pageid") int pageid, HttpServletRequest request) {
+    int total=reviewService.getReviewsAmountPerGame(gameTitle);
+    total = (total / 10) +  1;
+    modelAndView.clear();
+    getUsernameForModel(request);
+    setupSearchBar(modelAndView);
+
+    List<Review> reviews = reviewService.getReviewsByPagePerGame(gameTitle, pageid);
+
+    modelAndView.addObject("gameTitle", gameTitle);
+    modelAndView.addObject("prev_pageid", (pageid == 1 ? 1 : pageid-1 ));
+    modelAndView.addObject("next_pageid",(pageid == total ? total : pageid+1));
+
+    modelAndView.addObject("reviews", reviews);
+    modelAndView.setViewName("listReviews");
+    return modelAndView;
+  }
+
+
+
+
+
   @RequestMapping(value = "/games/profile/{gameTitle}/vote/{vote}", method = RequestMethod.GET)
   public ModelAndView addVote(
       @PathVariable("gameTitle") String gameTitle,
@@ -393,4 +438,6 @@ public class GameController {
     }
     return modelAndView;
   }
+
+
 }

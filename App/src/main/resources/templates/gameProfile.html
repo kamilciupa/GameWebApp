@@ -48,6 +48,7 @@
         <div class="page-header">
         <h3>Recenzje
         <a href="#" th:href="@{/games/profile/{gameTitle}/addReview/(gameTitle=${title})}"><small class="text-muted">Dodaj recenzję</small></a>
+        <a href = "#" th:href="@{/games/profile/{gameTitle}/reviews/1/(gameTitle=${title})}"><small class="text-muted">Wszystkie recenzje</small></a>
         </h3>
         </div>
         <div th:if="${not #lists.isEmpty(reviews)}">

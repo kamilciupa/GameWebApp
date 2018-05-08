@@ -11,7 +11,7 @@ public class Queries
     static public final String S_USER_BY_NAME = "SELECT * FROM users WHERE username = ?";
     static public final String S_USERNAME_BY_ID = "SELECT username FROM users WHERE id = ?";
     static public final String S_GAMES = "SELECT * FROM games";
-    static public final String S_GAMES_ORDERED_BY_RATING = "select * from games order by rating desc,votes_sum desc";
+    static public final String S_GAMES_ORDERED_BY_RATING = "select * from games order by rating desc nulls last,votes_sum desc limit 10";
     static public final String S_GAME_BY_TITLE = "SELECT * FROM games WHERE title = ?";
     static public final String S_GAMETITLE_BY_ID = "SELECT title FROM games WHERE id =?";
     static public final String S_REVIEWS = "SELECT * FROM reviews";
@@ -43,7 +43,7 @@ public class Queries
     static public final String U_GAME_COVER = "UPDATE games set cover = ? where id = (select id from games where title = ?)";
 
     public static final String S_REVIEW_BY_ID = "SELECT * FROM reviews WHERE id = ?";
-    public static final String S_GET_GAMES_TITLES = "SELECT title FROM games";
+    public static final String S_GET_GAMES_TITLES = "SELECT title FROM games ORDER BY title";
     public static final String U_GAME_RATING = "UPDATE games SET votes_amount = ? , votes_sum = ?, rating = ? where title = ?";
     public static final String I_COMMENT = "INSERT INTO commments (content, parent, type, key_value, author) values (?,?,?,?,?)";
     public static final String S_GET_REVIEWS_PER_GAME = "SELECT id, title, content, key_value, author FROM reviews where key_value = (SELECT id FROM games where title = ?) ";
@@ -59,4 +59,6 @@ public class Queries
     public static final String D_GAME_REV = "delete from reviews where key_value = (select id from games where title = ?);";
     public static final String D_GAME_COM = "delete from commments where key_value = (select id from games where title = ?);";
     public static final String D_GAME = "DELETE FROM games where title = ? and masterid = (select id from users where username = ?) ";
+    public static final String SELECT_COUNT_1_FROM_GAMES = "select count(1) from games";
+    public static final String S_AMOUN_REVS_PER_GAME = "select count(1) from reviews where key_value = (select id from games where title = ?)";
 }

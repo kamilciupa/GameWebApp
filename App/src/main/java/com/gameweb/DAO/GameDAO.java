@@ -18,7 +18,7 @@ import java.util.List;
 public class GameDAO {
 
   @Autowired JdbcTemplate jdbcTemplate;
-
+@Autowired UserService userService;
   // Make Bean and autowire that
   Queries queries = new Queries();
 
@@ -162,9 +162,25 @@ public class GameDAO {
     e.setAbout(resultSet.getString("about"));
     e.setDeveloper(resultSet.getString("developer"));
     e.setReleaseDate(resultSet.getDate("release_date"));
+    e.setCoverByteString("data:image/png;base64," + getCoverString(e.getCover()));
   }
 
+  private String getCoverString(byte[] avatar) {
+    String s = "";
+    byte[] bytes;
+    try {
+      if (avatar == null) {
+        bytes = userService.getDefaultAvatar();
+      } else {
+        bytes = avatar;
+      }
+      org.apache.commons.codec.binary.Base64 encoder = new org.apache.commons.codec.binary.Base64();
+      s = encoder.encodeToString(bytes);
+    } catch (Exception e) {
 
+    }
+    return s;
+  }
 
   public void updateCover(Game game) {
     jdbcTemplate.update(queries.U_GAME_COVER, game.getCover(), game.getTitle());

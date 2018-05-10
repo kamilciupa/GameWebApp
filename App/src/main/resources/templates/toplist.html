@@ -16,7 +16,30 @@
         <div class="panel-body">
     <div>
         <h2>Najlepsze gry</h2>
-        <a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p})}" ><div th:text="${p}"></div></a>
+        <!--<a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p})}" ><div th:text="${p}"></div></a>-->
+
+        <a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p.title})}" >
+            <div class="row align-items-center">
+                <div class="col-sm-2 col-md-2"></div>
+                <div class="col-sm-2 col-md-2">
+                    <img th:src="${p.coverByteString}" height="150" width="125" />
+                </div>
+                <div class="col-sm-4 col-md-4">
+                    <blockquote>
+                        <p th:text="${p.title}">Bruce Wayne</p>
+                        <small><cite title="Source Title" th:text="${p.about}">Gotham, United Kingdom</cite></small>
+                    </blockquote>
+                    <p>
+                        <i th:text="${p.developer}"> <i class="glyphicon glyphicon-envelope"></i>Tu będzie autor</i>
+                        <br/><i class="glyphicon glyphicon-globe"></i> Tu będzie kategoria
+                        <br/> <i th:text="${p.releaseDate}"></i> <i class="glyphicon glyphicon-gift"></i> Tu będzie data</p>
+                </div>
+            </div>
+            <!--</div></div></div>-->
+        </a>
+
+
+
     </div>
         </div></div>
 

@@ -22,6 +22,16 @@ public class Game {
     private Integer votesSum;
     private Integer masterId;
 
+    private String coverByteString;
+
+    public String getCoverByteString() {
+        return coverByteString;
+    }
+
+    public void setCoverByteString(String coverByteString) {
+        this.coverByteString = coverByteString;
+    }
+
     public Game(){
 
     }

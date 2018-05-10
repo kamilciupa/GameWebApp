@@ -127,6 +127,9 @@ public class GameController {
 
     List<Game> games = gameService.getGamesByPage(pageid);
 
+    for(Game g : games){
+      g.setAbout(g.getAbout().substring (0,(g.getAbout().length() < 80 ? g.getAbout().length() : 80 )));
+    }
 
     modelAndView.addObject("prev_pageid", (pageid == 1 ? 1 : pageid-1 ));
     modelAndView.addObject("next_pageid",(pageid == total ? total : pageid+1));
@@ -147,7 +150,10 @@ public class GameController {
       gTitles.add(g.getTitle());
     }
 //    Collections.reverse(gTitles);
-    modelAndView.addObject("games", gTitles);
+    for(Game g : games){
+      g.setAbout(g.getAbout().substring (0,(g.getAbout().length() < 80 ? g.getAbout().length() : 80 )));
+    }
+    modelAndView.addObject("games", games);
     modelAndView.setViewName("/toplist");
     return modelAndView;
   }

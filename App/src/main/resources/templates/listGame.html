@@ -16,11 +16,49 @@
         <div class="panel-body">
         <div>
             <h2>Gry na portalu</h2>
+
+
+
+            <!--<div class="comments-list">-->
+                <!--<div class="media">-->
+
+                    <!--<a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p.title})}" >-->
+                        <!--<blockquote>-->
+                        <!--&lt;!&ndash;<div class="media-left">&ndash;&gt;-->
+                            <!--<img th:src="${p.coverByteString}" height="50" width="50" />-->
+                        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                        <!--<div class="media-body">-->
+                            <!--<h4 class="media-heading user_name" th:text="${p.title}"></h4>-->
+                            <!--<span th:text="${p.about}">asdasdasdasdasdasdsad</span>-->
+                            <!--&lt;!&ndash;<span th:text="${#strings.substring(about,0,50)}">asdsada</span>&ndash;&gt;-->
+                        <!--</div>-->
+                        <!--</blockquote>-->
+                    <!--</a>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="vertical-center">-->
+            <!--<div class="container">-->
             <a href= "#" th:each="p : ${games}" th:href="@{/games/profile/{gameTitle}/(gameTitle=${p.title})}" >
-                <img th:src="${p.cover}" height="50" width="50" />
-                <div th:text="${p.title}"></div>
+                <div class="row align-items-center">
+                    <div class="col-sm-2 col-md-2"></div>
+                    <div class="col-sm-2 col-md-2">
+                        <img th:src="${p.coverByteString}" height="150" width="125" />
+                    </div>
+                    <div class="col-sm-4 col-md-4">
+                        <blockquote>
+                            <p th:text="${p.title}">Bruce Wayne</p>
+                            <small><cite title="Source Title" th:text="${p.about}">Gotham, United Kingdom</cite></small>
+                        </blockquote>
+                        <p>
+                        <i th:text="${p.developer}"> <i class="glyphicon glyphicon-envelope"></i>Tu będzie autor</i>
+                            <br/><i class="glyphicon glyphicon-globe"></i> Tu będzie kategoria
+                           <br/> <i th:text="${p.releaseDate}"></i> <i class="glyphicon glyphicon-gift"></i> Tu będzie data</p>
+                    </div>        </div>
+                <!--</div></div></div>-->
             </a>
+            <!--</div>-->
         </div>
+
             <div>
                 <a href = "#" th:href="@{/games/all/{pageid}/(pageid=${prev_pageid})}"> <span class="glyphicon glyphicon-chevron-left"></span></a>
                 <a href = "#" th:href="@{/games/all/{pageid}/(pageid=${next_pageid})}"> <span class="glyphicon glyphicon-chevron-right"></span></a>

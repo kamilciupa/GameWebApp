@@ -2,6 +2,7 @@ package com.gameweb.DAO;
 
 import com.gameweb.model.Game;
 import com.gameweb.model.User;
+import com.gameweb.service.UserService;
 import com.gameweb.utils.Queries;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -162,6 +163,8 @@ public class GameDAO {
     e.setDeveloper(resultSet.getString("developer"));
     e.setReleaseDate(resultSet.getDate("release_date"));
   }
+
+
 
   public void updateCover(Game game) {
     jdbcTemplate.update(queries.U_GAME_COVER, game.getCover(), game.getTitle());

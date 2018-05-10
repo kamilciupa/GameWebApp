@@ -92,4 +92,6 @@ public class GameService {
         int total = getGamesAmount();
         return gameDAO.getGameByPage(pageid, total);
     }
+
+
 }

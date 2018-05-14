@@ -18,7 +18,7 @@ public class Queries
     static public final String S_CATEGORIES = "SELECT * FROM categories";
     static public final String S_IS_VOTED = "SELECT vote FROM user_vote where game_id = ? and user_id = ?";
     static public final String S_GAMES_LIKE = "SELECT * FROM games WHERE upper(title) like ?";
-
+    static public final String S_TAGS_FOR_GAME = "SELECT nam";
 
     static public final String S_GET_DEF_AVATAR = "SELECT photo FROM photo_def WHERE id = 1";
 
@@ -61,4 +61,6 @@ public class Queries
     public static final String D_GAME = "DELETE FROM games where title = ? and masterid = (select id from users where username = ?) ";
     public static final String SELECT_COUNT_1_FROM_GAMES = "select count(1) from games";
     public static final String S_AMOUN_REVS_PER_GAME = "select count(1) from reviews where key_value = (select id from games where title = ?)";
+    public static final String S_CAT_BY_NAME = "SELECT * FROM categories WHERE UPPER(name) = upper(?)";
+  public static final String  S_CAT_BY_GAME =  "select * from categories where id = (select cat_id from categories_games where game_id = ?)";
 }

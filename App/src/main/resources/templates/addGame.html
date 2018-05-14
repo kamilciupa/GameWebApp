@@ -20,6 +20,13 @@
                 <input type="text" placeholder="Tytuł Gry" name="username" th:field="*{title}" required="true" class="form-control"/>
                 <!--<input type="textarea" placeholder="Email" name="email" th:field="*{about}" required="true" class="form-control"/>-->
                 <input type="text" placeholder="Twórca/Studio" name="developer" th:field="*{developer}" class="form-control"/>
+            <!--<div class="form-group">-->
+                <!--<label for="sel1">Select list:</label>-->
+                <select class="form-control"  th:field="*{cat_id}">
+                    <!--<option disabled="disabled">Wybierz tag</option>-->
+                    <option th:each="cat:${cats}" th:value="${cat.id}" th:text="${cat.name}">2</option>
+                </select>
+            <!--</div>-->
                 <!--<input type="date"  name="releaseDate" th:field="*{releaseDate}" class="form-control"/>-->
                 <!--<textarea name="about" placeholder="Opis gry" th:field="*{about}" cols="40" rows="5"></textarea>-->
             <textarea style="resize: vertical" name="about" placeholder="Opis gry" th:field="*{about}"  class="form-control"></textarea>

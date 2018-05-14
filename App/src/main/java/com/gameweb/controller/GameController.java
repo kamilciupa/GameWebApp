@@ -1,13 +1,7 @@
 package com.gameweb.controller;
 
-import com.gameweb.model.Comment;
-import com.gameweb.model.Game;
-import com.gameweb.model.Review;
-import com.gameweb.model.User;
-import com.gameweb.service.CommentService;
-import com.gameweb.service.GameService;
-import com.gameweb.service.ReviewService;
-import com.gameweb.service.UserService;
+import com.gameweb.model.*;
+import com.gameweb.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +24,8 @@ public class GameController {
   @Autowired UserService userService;
   @Autowired ReviewService reviewService;
   @Autowired CommentService commentService;
+  @Autowired
+  CategoryService categoryService;
 
   ModelAndView modelAndView = new ModelAndView();
 
@@ -66,6 +62,8 @@ public class GameController {
     getUsernameForModel(request);
     setupSearchBar(modelAndView);
     modelAndView.addObject("game", new Game());
+    List<Category> cat = categoryService.getCategories();
+    modelAndView.addObject("cats", cat);
     modelAndView.setViewName("/addGame");
     return modelAndView;
   }

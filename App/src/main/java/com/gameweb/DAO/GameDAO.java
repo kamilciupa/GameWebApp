@@ -35,11 +35,8 @@ public class GameDAO {
           game.getCover(),
           userID);
 
-     Game g = getUserByTitle(game.getTitle());
-     System.out.println(game.getCat_id());
-      System.out.println(game.getCat_name());
+      jdbcTemplate.update(queries.I_CAT_GAME, game.getCat_id(), game.getTitle());
 
-      addCategoryToGame(g, game.getCat_id());
     } catch (Exception e) {
       e.printStackTrace();
     }

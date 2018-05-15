@@ -37,8 +37,9 @@
         <small><p th:text="'Ocena: ' + ${rating} + ' (' + ${votes_amount} + ' ocen)'"> Ocena: </p></small>
         <cite title="Source Title" th:text="${about}">Gotham, United Kingdom  <i class="glyphicon glyphicon-map-marker"></i></cite>
     </blockquote>
-    <p th:text="${developer}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
-    <p th:text="${releaseDate}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
+    <p th:text="'Wydawca: ' + ${developer}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
+    <p th:text="'Data wydania: ' + ${releaseDate}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
+    <p th:text="'Kategoria: ' +${cat_name}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
 </div>
 </div>
 </div>

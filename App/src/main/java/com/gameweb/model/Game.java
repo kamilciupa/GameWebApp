@@ -37,7 +37,7 @@ public class Game {
     }
 
     public Game(){
-
+    this.releaseDate = new Date(01,01,1990);
     }
 
     public Game(String title, Integer masterId) {

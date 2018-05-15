@@ -27,7 +27,7 @@ public class Queries
     static public final String I_USER = "INSERT INTO users (username, email, password) VALUES (?,?,?)";
     static public final String I_USER_W_AVATAR = "INSERT INTO users (username, email, password,avatar) VALUES (?,?,?,?)";
 //    static public final String I_GAME = "INSERT INTO games (title,about, developer, release_date,cover,  masterid) VALUES (?,?,?,?,?,?)";
-    static public final String I_GAME = "INSERT INTO games (title,about, developer, cover,  masterid) VALUES (?,?,?,?,?)";
+    static public final String I_GAME = "INSERT INTO games (title,about, developer, release_date,cover,  masterid) VALUES (?,?,?,?,?,?)";
     static public final String I_REVIEW = "INSERT INTO reviews (title, content, key_value, author) VALUES (?,?,?,?)";
     static public final String I_USER_ROLE = "INSERT INTO user_roles (username, role) VALUES (?,?)";
     static public final String I_CATEGORY_GAME = "INSERT INTO categories_games (cat_id, game_id) values (?,?)";
@@ -63,4 +63,6 @@ public class Queries
     public static final String S_AMOUN_REVS_PER_GAME = "select count(1) from reviews where key_value = (select id from games where title = ?)";
     public static final String S_CAT_BY_NAME = "SELECT * FROM categories WHERE UPPER(name) = upper(?)";
   public static final String  S_CAT_BY_GAME =  "select * from categories where id = (select cat_id from categories_games where game_id = ?)";
+  public static final String I_CAT_GAME = "insert into categories_games (cat_id, game_id) values (?, (select id from games where title = ?))";
+
 }

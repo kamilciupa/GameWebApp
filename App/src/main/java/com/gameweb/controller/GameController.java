@@ -197,6 +197,7 @@ public class GameController {
     modelAndView.addObject("releaseDate", game.getReleaseDate());
     modelAndView.addObject("rating", Math.round(game.getRating()));
     modelAndView.addObject("votes_amount", game.getVotesAmount());
+    modelAndView.addObject("cat_name", game.getCat_name());
     modelAndView.addObject("comment", new Comment());
     List<Comment> a = commentService.getMainComments(gameTitle);
     Collections.reverse(a);

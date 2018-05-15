@@ -26,8 +26,11 @@
                     <!--<option disabled="disabled">Wybierz tag</option>-->
                     <option th:each="cat:${cats}" th:value="${cat.id}" th:text="${cat.name}">2</option>
                 </select>
+
+
             <!--</div>-->
-                <!--<input type="date"  name="releaseDate" th:field="*{releaseDate}" class="form-control"/>-->
+                <input type="date"  id="releaseDate" th:field="*{releaseDate}" class="form-control"/>
+
                 <!--<textarea name="about" placeholder="Opis gry" th:field="*{about}" cols="40" rows="5"></textarea>-->
             <textarea style="resize: vertical" name="about" placeholder="Opis gry" th:field="*{about}"  class="form-control"></textarea>
 

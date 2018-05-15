@@ -31,7 +31,7 @@ public class GameDAO {
           game.getTitle(),
           game.getAbout(),
           game.getDeveloper(),
-//          game.getReleaseDate(),
+          game.getReleaseDate(),
           game.getCover(),
           userID);
 

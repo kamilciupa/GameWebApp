@@ -30,9 +30,9 @@
                         <small><cite title="Source Title" th:text="${p.about}">Gotham, United Kingdom</cite></small>
                     </blockquote>
                     <p>
-                        <i th:text="${p.developer}"> <i class="glyphicon glyphicon-envelope"></i>Tu będzie autor</i><br/>
-                        <i class="glyphicon glyphicon-globe"></i> Tu będzie kategoria<br/>
-                        <i th:text="${p.releaseDate}"><i class="glyphicon glyphicon-gift"></i> Tu będzie data</i>
+                    <p th:text="'Wydawca: ' + ${p.developer}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
+                    <p th:text="'Data wydania: ' + ${p.releaseDate}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
+                    <p th:text="'Kategoria: ' +${p.cat_name}"> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com</p>
                     </p>
                 </div>
             </div>

@@ -1,5 +1,6 @@
 package com.gameweb.DAO;
 
+import com.gameweb.model.Category;
 import com.gameweb.model.Game;
 import com.gameweb.model.User;
 import com.gameweb.service.UserService;
@@ -19,6 +20,7 @@ public class GameDAO {
 
   @Autowired JdbcTemplate jdbcTemplate;
 @Autowired UserService userService;
+@Autowired CategoryDAO categoryDAO;
   // Make Bean and autowire that
   Queries queries = new Queries();
 
@@ -32,9 +34,19 @@ public class GameDAO {
 //          game.getReleaseDate(),
           game.getCover(),
           userID);
+
+     Game g = getUserByTitle(game.getTitle());
+     System.out.println(game.getCat_id());
+      System.out.println(game.getCat_name());
+
+      addCategoryToGame(g, game.getCat_id());
     } catch (Exception e) {
       e.printStackTrace();
     }
+  }
+
+  public void addCategoryToGame(Game game, int c){
+    jdbcTemplate.update(queries.I_CATEGORY_GAME, c,game.getId() );
   }
 
   public List<Game> getGamesTitles() {
@@ -69,6 +81,7 @@ public class GameDAO {
                   game.setRating(resultSet.getDouble("rating"));
                   game.setVotesSum(resultSet.getInt("votes_sum"));
                   game.setVotesAmount(resultSet.getInt("votes_amount"));
+                  fillCategory(game);
                   return game;
                 }
               },
@@ -128,6 +141,7 @@ public class GameDAO {
               public Game mapRow(ResultSet resultSet, int i) throws SQLException {
                 Game e = new Game();
                 fillGameData(resultSet, e);
+                fillCategory(e);
                 return e;
               }
             });
@@ -143,6 +157,7 @@ public class GameDAO {
               public Game mapRow(ResultSet resultSet, int i) throws SQLException {
                 Game e = new Game();
                 fillGameData(resultSet, e);
+                fillCategory(e);
                 return e;
               }
             },
@@ -164,6 +179,15 @@ public class GameDAO {
     e.setReleaseDate(resultSet.getDate("release_date"));
     e.setCoverByteString("data:image/png;base64," + getCoverString(e.getCover()));
   }
+
+  private void fillCategory(Game e){
+
+    Category c = categoryDAO.getCategoryByGame(e.getId());
+    e.setCat_id(c.getId());
+    e.setCat_name(c.getName());
+    System.out.println(e.getCat_name());
+  }
+
 
   private String getCoverString(byte[] avatar) {
     String s = "";
@@ -220,6 +244,7 @@ public class GameDAO {
       public Game mapRow(ResultSet rs, int row) throws SQLException {
         Game e = new Game();
         fillGameData(rs,e);
+        fillCategory(e);
         return e;
       }
     });

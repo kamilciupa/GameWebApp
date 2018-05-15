@@ -3,6 +3,7 @@ package com.gameweb.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Kamil on 2017-11-29.
@@ -22,6 +23,9 @@ public class Game {
     private Integer votesSum;
     private Integer masterId;
 
+
+    private int cat_id;
+    private String cat_name;
     private String coverByteString;
 
     public String getCoverByteString() {
@@ -42,6 +46,23 @@ public class Game {
         this.rating = 0.0d;
         this.votesAmount = 0;
         this.votesSum = 0;
+    }
+
+
+    public int getCat_id() {
+        return cat_id;
+    }
+
+    public void setCat_id(int cat_id) {
+        this.cat_id = cat_id;
+    }
+
+    public String getCat_name() {
+        return cat_name;
+    }
+
+    public void setCat_name(String cat_name) {
+        this.cat_name = cat_name;
     }
 
     public Integer getId() {

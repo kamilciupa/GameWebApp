@@ -2,6 +2,7 @@ package com.gameweb.service;
 
 import com.gameweb.DAO.GameDAO;
 import com.gameweb.model.Game;
+import com.gameweb.model.SortParams;
 import com.gameweb.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -91,6 +92,16 @@ public class GameService {
     public List<Game> getGamesByPage(int pageid) {
         int total = getGamesAmount();
         return gameDAO.getGameByPage(pageid, total);
+    }
+
+    public List<Game> getGamesByPageSort(int pageid, SortParams sortParams) {
+        int total = getGamesAmountSort(sortParams);
+        return gameDAO.getGamesByPageSort(pageid, total, sortParams);
+    }
+
+    public int getGamesAmountSort(SortParams sortParams) {
+        return gameDAO.getGamesAmountSort(sortParams.getFromRat(), sortParams.getToRat(),sortParams.getFromDat(),
+                sortParams.getToDat(), sortParams.getTag(), sortParams.getSort());
     }
 
 

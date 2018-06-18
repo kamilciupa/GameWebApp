@@ -12,8 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -115,15 +117,29 @@ public class GameController {
 //    return modelAndView;
 //  }
 
+
+  static  SortParams sortParams = new SortParams();
+
+  @RequestMapping(value = "/games/setParams", method = RequestMethod.POST)
+  public ModelAndView getNewParams(@Valid SortParams sortParams1 )
+  {
+    modelAndView.addObject("sortParams", sortParams);
+    SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+    System.out.println(s.format(sortParams1.getFromDat()));
+    sortParams = sortParams1;
+    modelAndView.setViewName("redirect:/games/all/1");
+    return modelAndView;
+  }
+
   @RequestMapping(value="/games/all/{pageid}")
   public ModelAndView edit(@PathVariable int pageid, HttpServletRequest request) {
-    int total=gameService.getGamesAmount();
+    int total=gameService.getGamesAmountSort(sortParams);
     total = (total / 10) +  1;
     modelAndView.clear();
     getUsernameForModel(request);
     setupSearchBar(modelAndView);
 
-    List<Game> games = gameService.getGamesByPage(pageid);
+    List<Game> games = gameService.getGamesByPageSort(pageid,sortParams);
 
     for(Game g : games){
       g.setAbout(g.getAbout().substring (0,(g.getAbout().length() < 80 ? g.getAbout().length() : 80 )));
@@ -131,8 +147,10 @@ public class GameController {
 
     modelAndView.addObject("prev_pageid", (pageid == 1 ? 1 : pageid-1 ));
     modelAndView.addObject("next_pageid",(pageid == total ? total : pageid+1));
-
+    List<Category> cat = categoryService.getCategories();
+    modelAndView.addObject("cats", cat);
     modelAndView.addObject("games", games);
+    modelAndView.addObject("sortParams", sortParams);
     modelAndView.setViewName("listGame");
     return modelAndView;
 //    return new ModelAndView("listGame","games",games);

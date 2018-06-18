@@ -2,6 +2,7 @@ package com.gameweb.DAO;
 
 import com.gameweb.model.Category;
 import com.gameweb.model.Game;
+import com.gameweb.model.SortParams;
 import com.gameweb.model.User;
 import com.gameweb.service.UserService;
 import com.gameweb.utils.Queries;
@@ -13,6 +14,8 @@ import org.springframework.stereotype.Repository;
 import java.security.Principal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -235,6 +238,17 @@ public class GameDAO {
     return 0;
   }
 
+
+
+  public int getGamesAmount(){
+    return jdbcTemplate.queryForObject(Queries.SELECT_COUNT_1_FROM_GAMES, new Object[] {}, Integer.class);
+  }
+
+  public int getGamesAmountSort(double fromRat, double toRat, Date fromDat, Date toDat, int tag, int sort) {
+    String mainQuery = "select count(1) from games where rating between " + fromRat+" and " + toRat + " or rating is null" ;
+    return jdbcTemplate.queryForObject(mainQuery, new Object[] {}, Integer.class);
+  }
+
   public List<Game> getGameByPage(int pageid,int total){
     String sql="select * from games order by title limit 10 offset "+ (pageid-1)*10;
     return jdbcTemplate.query(sql,new RowMapper<Game>(){
@@ -247,8 +261,48 @@ public class GameDAO {
     });
   }
 
-  public int getGamesAmount(){
-    return jdbcTemplate.queryForObject(Queries.SELECT_COUNT_1_FROM_GAMES, new Object[] {}, Integer.class);
+  public List<Game> getGamesByPageSort(int pageid, int total, SortParams sortParams) {
+    String order = "title asc";
+    switch(sortParams.getSort()){
+      case 1:
+        order = "title asc";
+        break;
+      case 2:
+        order = "title desc";
+        break;
+      case 3:
+        order = "rating asc";
+        break;
+      case 4:
+        order = "rating desc";
+        break;
+      case 5:
+        order = "release_date asc";
+        break;
+      case 6:
+        order = "release_date desc";
+        break;
+    }
+
+    String whereClauseCat = "and id in (select game_id from categories_games where cat_id = "+ sortParams.getTag()+ " )";
+    SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd");
+    String whereClauseDate = "and release_date between to_date('" + s.format(sortParams.getFromDat()) + "','YYYY-MM-DD') and to_date('" + s.format(sortParams.getToDat())+ "','YYYY-MM-DD') ";
+    String whereClause = "where (rating between " + sortParams.getFromRat() + " and " + sortParams.getToRat() + " or rating is null) " + whereClauseDate ;
+
+    String sql="select * from games " + whereClause+ " order by " + order + " limit 10 offset "+ (pageid-1)*10;
+if (sortParams.getTag() != 999 ){
+  sql = "select * from games " + whereClause+whereClauseCat+ " order by " + order + " limit 10 offset "+ (pageid-1)*10;
+}
+
+System.out.println(sql);
+    return jdbcTemplate.query(sql,new RowMapper<Game>(){
+      public Game mapRow(ResultSet rs, int row) throws SQLException {
+        Game e = new Game();
+        fillGameData(rs,e);
+        fillCategory(e);
+        return e;
+      }
+    });
   }
 }
 

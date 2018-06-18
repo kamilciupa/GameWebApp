@@ -65,4 +65,5 @@ public class Queries
   public static final String  S_CAT_BY_GAME =  "select * from categories where id = (select cat_id from categories_games where game_id = ?)";
   public static final String I_CAT_GAME = "insert into categories_games (cat_id, game_id) values (?, (select id from games where title = ?))";
 
+    public static final String I_VOTE_INIT = "update games set rating = 0 where title = ?";
 }

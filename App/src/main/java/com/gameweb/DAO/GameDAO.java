@@ -37,7 +37,7 @@ public class GameDAO {
           game.getReleaseDate(),
           game.getCover(),
           userID);
-
+      jdbcTemplate.update(queries.I_VOTE_INIT, game.getTitle());
       jdbcTemplate.update(queries.I_CAT_GAME, game.getCat_id(), game.getTitle());
 
     } catch (Exception e) {

@@ -20,13 +20,13 @@
                         <input type="email" placeholder="Email" name="email" th:field="*{email}" required="true" class="form-control"/>
                         <input type="password" placeholder="Hasło" name="password"  class="form-control" id="password" th:field="*{password}"  onkeyup='check();' required="true"/>
                         <div id="passVal">
-                            <span id="8char" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> 8 Characters Long<br/>
-                            <span id="lcase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> One Lowercase Letter<br/>
-                            <span id="num" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> One Number
+                            <span id="8char" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Minimum 8 znaków<br/>
+                            <span id="lcase" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Minimum jedna mała litera<br/>
+                            <span id="num" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Minimum jedena cyfra
                         </div>
                         <input type="password" placeholder="Powtórz hasło" name="re-password" class="form-control" id="repasswor"  onkeyup='check();' required="true"/>
                         <div id="repassVal">
-                            <span id="pwmatch" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Passwords Match
+                            <span id="pwmatch" class="glyphicon glyphicon-remove" style="color:#FF0004;"></span> Zgodność haseł
                         </div>
                         <button type="submit" id="butt" class="btn btn-lg btn-danger btn-block" > Zarejestruj </button>
                     </div>

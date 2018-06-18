@@ -21,6 +21,7 @@ public class CategoryDAO {
 
 
     public Category getCategoryByGame(int gameid){
+        System.out.println(gameid);
         Category c = jdbcTemplate.queryForObject(queries.S_CAT_BY_GAME, new RowMapper<Category>(){
             @Override
             public Category mapRow(ResultSet rs, int i) throws SQLException {
